@@ -25,8 +25,7 @@ class TestUserPaymentTypes(unittest.TestCase):
                             'New Orleans',
                             'Louisiana',
                             '12345',
-                            '111-222-3333',
-                            False
+                            '111-222-3333'
                             )
 
         self.payments = PaymentManager() # PaymentManager class for accessing methods related to payment + payment information.
