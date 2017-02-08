@@ -4,11 +4,11 @@ sys.path.append('../')
 from app.customer import *
 from app.customerstatusmanager import *
 
+class TestUserIsActive(unittest.TestCase):
 '''Methods: test_customer_is_active: method will test if active status returns true, which indicates user is current user.
 	Arguments: Customer and CustomerStatusManager
 Author: L.Sales, Python Ponies
 '''
-class TestUserIsActive(unittest.TestCase):
 	#Test to determine if user is active
 	def test_customer_is_active(self):
 		#establish an instance of a user
