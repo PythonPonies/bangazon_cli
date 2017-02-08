@@ -18,13 +18,6 @@ class TestUserPaymentTypes(unittest.TestCase):
         Author: Steven Holmes
     """
 
-    # self.customer_name = customer_name
-    # self.city = city
-    # self.state = state
-    # self.postal_code = postal_code
-    # self.phone_number = phone_number
-    # self.active = False
-
     @classmethod
     def setUpClass(self):
         self.john = Customer(
@@ -35,7 +28,7 @@ class TestUserPaymentTypes(unittest.TestCase):
                             '111-222-3333',
                             False
                             )
-        
+
         self.payments = PaymentManager() # PaymentManager class for accessing methods related to payment + payment information.
 
     def test_user_can_add_payment_type(self):
