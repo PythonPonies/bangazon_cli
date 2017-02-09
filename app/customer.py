@@ -1,8 +1,14 @@
 class Customer(object):
     """ The Customer class creates a new Customer with data passed to it.
 
-    Method List   __init__ instansiates the new Customer with customer_name,
-                  city, state, postal_code, and phone_number
+    Method List:
+        - __init__: instansiates the new Customer with customer_name, city, state, postal_code, and phone_number
+        - get_customer_name:
+        - get_city:
+        - get_state:
+        - get_postal_code:
+        - get_phone_number
+
     Arguments     The object argument lets the Customer class inherit properites of object
     Author        Nate Baker, Python Ponies
     """
@@ -15,4 +21,22 @@ class Customer(object):
         self.state = state
         self.postal_code = postal_code
         self.phone_number = phone_number
-        self.active = False
+        self.active = False # This is false by default so it doesn't need to be an argument
+
+    def get_customer_name(self):
+        return self.customer_name
+
+    def get_city(self):
+        return self.city
+
+    def get_state(self):
+        return self.state
+
+    def get_postal_code(self):
+        return self.postal_code
+
+    def get_phone_number(self):
+        return self.phone_number
+
+    def get_active(self):
+        return self.active
