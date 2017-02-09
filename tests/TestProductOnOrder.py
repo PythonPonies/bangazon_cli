@@ -43,9 +43,11 @@ class TestProductOnOrder(unittest.TestCase):
         self.orderManager.add_product_to_order(order_1, product_1)
         self.assertIn((order_1, product_1), self.orderManager.product_on_order)
 
-    # def test_afterCustomerCanSeeAllRemainingProducts(self):
-    #     '''Test that customer can see all remaining products'''
-    #     self.assertIsNotNone(self.productManager.get_all_available_products(self.zoe))
+    def test_customer_can_see_all_products_on_order(self):
+        """ This method tests if a customer can successfully see products on an order.
+        """
+        order_1 = Order(self.zoe.customer_name)
+        self.assertIsNotNone(self.orderManager.get_products_on_order(order_1))
 
 if __name__ == '__main__':
     unittest.main()
