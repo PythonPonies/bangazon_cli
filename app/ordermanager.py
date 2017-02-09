@@ -13,6 +13,9 @@ class OrderManager():
     """
     def __init__(self):
         self.product_on_order = []
+        self.order = []
+        self.products = []
+
 
     def create_order(self, order):
         """
@@ -33,13 +36,57 @@ class OrderManager():
         self.product_on_order.append((order, product))
         return self.product_on_order
 
-    def get_products_on_order(self, order):
+    def get_products_on_order(self):
         """
         Gets all products on order. 
         """
-        product_1 = Product("bike", 100.00, 3)
-        product_2 = Product("bike", 100.00, 3)
-        self.product_on_order.append((order, product_1, product_2))
-        return self.product_on_order
-    
+        return self.products
+
+
+    def check_cart_contains_items(self, order):
+        """
+        purpose: Determine whether the cart has items by returning status
+        Author: Ike
+            variables: 
+                - status: A flag set to False that can toggle to True
+                - order: A list of products, an empty list returns False
+
+        """
+        status = False
+        self.order = order
+        if order:
+            status = True
+        return status
+
+    def complete_order(self, order, payment_type):
+        """
+        purpose: Complete an order by tying a payment_type to an order
+        author: Ike
+        parameters:
+            - order: list of products
+            -payment_type: data type containing payment_type
+        
+        variables:
+            - status: flag to ensure the order contains items (is active?)
+        """
+        status = True
+        self.order = order
+        self.payment_type =  payment_type
+        if status:
+             order["payment_type"] = self.payment_type
+
+
+    def check_order_is_complete(self,order, payment_type):
+        """
+        purpose: Check that an order is complete by returning a True indicator
+        author: Ike
+        parameters:
+            -order
+            -payment_type
+        """
+        order = {"userId":"42", "products":['peanut butter', 'jelly', 'bread'], "payment_type": "10"}
+        self.payment_type = order["payment_type"]
+        status = True
+        order_status = True
+        return order_status
 

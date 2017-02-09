@@ -9,7 +9,7 @@ class Order:
         
         self.__date_created = "2017-02-08"
         self.__customer = user
-        self.__payment_type = ""
+        self.payment_type = []
         self.__payment_complete = False
         self.__active = True
 
@@ -20,7 +20,7 @@ class Order:
         return self.__customer
 
     def get_order_payment_type(self):
-        return self.__payment_type
+        return self.payment_type
 
     def get_order_payment_complete(self):
         return self.__payment_complete
