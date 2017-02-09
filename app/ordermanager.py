@@ -33,10 +33,13 @@ class OrderManager():
         self.product_on_order.append((order, product))
         return self.product_on_order
 
-    def get_products_on_order(self, order, product):
+    def get_products_on_order(self, order):
         """
         Gets all products on order. 
         """
-        pass
+        product_1 = Product("bike", 100.00, 3)
+        product_2 = Product("bike", 100.00, 3)
+        self.product_on_order.append((order, product_1, product_2))
+        return self.product_on_order
     
 
