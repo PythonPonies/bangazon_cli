@@ -32,7 +32,7 @@ class TestProductOnOrder(unittest.TestCase):
         order_1 = Order(self.zoe.customer_name)
         self.assertIsInstance(order_1, Order)
         self.orderManager.create_order(order_1)
-        self.assertTrue(self.orderManager.customer_has_active_order(order_1))
+        self.assertIs(order_1, self.orderManager.get_order())
        
     def test_customer_can_add_product_to_an_order(self):
         """ This method tests if a customer can successfully add a product to an order. A customer should be able to add a product to an order by passing their name and product.

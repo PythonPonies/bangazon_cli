@@ -16,13 +16,14 @@ class OrderManager():
         """
         A new order is created based on the arguments passed in: order. 
         """
-        return "{}, {}, {}, {}, {}".format(order.get_order_date_created(), order.get_order_customer(), order.get_order_payment_type(), order.get_order_payment_complete(), order.get_order_status() )
+        self.order = order
+        return self
 
-    def customer_has_active_order(self, order):
+    def customer_has_not_paid(self, order):
         """
         Checks if customer has an active order. 
         """
-        return order.get_order_status()
+        return order.get_order_payment_complete()
 
     def add_product_to_order(self, order, product):
         """

@@ -11,7 +11,6 @@ class Order:
         self.__customer = user
         self.payment_type = []
         self.__payment_complete = False
-        self.__active = True
 
     def get_order_date_created(self):
         return self.__date_created
@@ -25,8 +24,5 @@ class Order:
     def get_order_payment_complete(self):
         return self.__payment_complete
 
-    def get_order_status(self):
-        return self.__active
 
-# if __name__ == '__main__':
     
