@@ -14,8 +14,7 @@
 
 CREATE TABLE `Customers` (
     `customerId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    `first_name` TEXT NOT NULL,
-    `last_name` TEXT NOT NULL,
+    `customer_name` TEXT NOT NULL,
     `street_address` TEXT NOT NULL,
     `city` TEXT NOT NULL,
     `state` TEXT NOT NULL,
@@ -24,8 +23,8 @@ CREATE TABLE `Customers` (
     `active` INTEGER NOT NULL
 );
 
-INSERT INTO Customers VALUES (null, 'John', 'Doe', '123 Testing Way', 'Exampleville', 'Florida', '12345', '123-456-1234', 0);
-INSERT INTO Customers VALUES (null, 'Janet', 'Jackson', '555 Poptart Drive', 'Beverly Hills', 'California', '90210', '911-111-1111', 0);
+INSERT INTO Customers VALUES (null, 'John Doe', '123 Testing Way', 'Exampleville', 'Florida', '12345', '123-456-1234', 0);
+INSERT INTO Customers VALUES (null, 'Janet Jackson', '555 Poptart Drive', 'Beverly Hills', 'California', '90210', '911-111-1111', 0);
 
 
 CREATE TABLE `PaymentTypes` (
@@ -39,12 +38,12 @@ CREATE TABLE `PaymentTypes` (
 INSERT INTO PaymentTypes  
   SELECT null, 'Visa', '1234567890', customerId
   FROM Customers c
-  WHERE c.first_name = 'John';
+  WHERE c.customer_name = 'John Doe';
 
 INSERT INTO PaymentTypes  
   SELECT null, 'MasterCard', '0987654321', customerId
   FROM Customers c
-  WHERE c.first_name = 'Janet';
+  WHERE c.customer_name = 'Janet Jackson';
 
 
 CREATE TABLE `Products` (
@@ -74,12 +73,12 @@ CREATE TABLE `Orders` (
 INSERT INTO Orders  
   SELECT null, '01-01-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
-  WHERE c.first_name = 'Janet' and t.paymentTypeId = 2;
+  WHERE c.customer_name = 'Janet Jackson' and t.paymentTypeId = 2;
 
 INSERT INTO Orders  
   SELECT null, '02-03-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
-  WHERE c.first_name = 'John' and t.paymentTypeId = 1;
+  WHERE c.customer_name = 'John Doe' and t.paymentTypeId = 1;
 
 
 CREATE TABLE `ProductsOnOrders` (
