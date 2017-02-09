@@ -62,6 +62,7 @@ INSERT INTO Products VALUES (null, 'Plastic Cups', 'For drinking things', '$2', 
 
 CREATE TABLE `Orders` (
     `orderId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    `date_created` TEXT NOT NULL,
     `customerId` INTEGER NOT NULL,
     `paymentTypeId` INTEGER NOT NULL,
     `payment_complete` INTEGER NOT NULL,
@@ -70,12 +71,12 @@ CREATE TABLE `Orders` (
 );
 
 INSERT INTO Orders  
-  SELECT null, c.customerId, t.paymentTypeId, 0
+  SELECT null, '01-01-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
   WHERE c.first_name = 'Janet' and t.paymentTypeId = 2;
 
 INSERT INTO Orders  
-  SELECT null, c.customerId, t.paymentTypeId, 0
+  SELECT null, '02-03-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
   WHERE c.first_name = 'John' and t.paymentTypeId = 1;
 
