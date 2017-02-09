@@ -1,5 +1,5 @@
 class Customer(object):
-    """ The Customoer class creates a new Customer with data passed to it.
+    """ The Customer class creates a new Customer with data passed to it.
 
     Method List   __init__ instansiates the new Customer with customer_name,
                   city, state, postal_code, and phone_number
