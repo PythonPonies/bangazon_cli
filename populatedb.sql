@@ -1,15 +1,16 @@
-DELETE FROM ProductsOnOrders;
-DELETE FROM Orders;
-DELETE FROM Products;
-DELETE FROM PaymentTypes;
-DELETE FROM Customers;
+-- DELETE FROM ProductsOnOrders;
+-- DELETE FROM Orders;
+-- DELETE FROM Products;
+-- DELETE FROM PaymentTypes;
+-- DELETE FROM Customers;
 
-DROP TABLE IF EXISTS Customers;
-DROP TABLE IF EXISTS PaymentTypes;
-DROP TABLE IF EXISTS Products;
-DROP TABLE IF EXISTS Orders;
-DROP TABLE IF EXISTS ProductsOnOrders;
+-- DROP TABLE IF EXISTS Customers;
+-- DROP TABLE IF EXISTS PaymentTypes;
+-- DROP TABLE IF EXISTS Products;
+-- DROP TABLE IF EXISTS Orders;
+-- DROP TABLE IF EXISTS ProductsOnOrders;
 
+-- Uncomment above code after initial database creation --
 
 CREATE TABLE `Customers` (
     `customerId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
