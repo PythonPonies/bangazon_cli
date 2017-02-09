@@ -13,7 +13,8 @@ class OrderManager():
     """
     def __init__(self):
         self.product_on_order = []
-
+        self.order = []
+        self.products = []
     def create_order(self, order):
         """
         A new order is created based on the arguments passed in: order. 
@@ -30,16 +31,21 @@ class OrderManager():
         """
         Adds a new product to an order. 
         """
-        self.product_on_order.append((order, product))
-        return self.product_on_order
+        self.products = product
+        self.order = order
 
-    def get_products_on_order(self, order):
+        return self
+
+    def get_products_on_order(self):
         """
         Gets all products on order. 
         """
-        product_1 = Product("bike", 100.00, 3)
-        product_2 = Product("bike", 100.00, 3)
-        self.product_on_order.append((order, product_1, product_2))
-        return self.product_on_order
+        return self.products
+
+    def get_order(self):
+        """
+        Gets all products on order. 
+        """
+        return self.order
     
 
