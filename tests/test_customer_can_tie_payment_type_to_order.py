@@ -22,9 +22,7 @@ class TestCompleteOrder(unittest.TestCase):
 	def setUpClass(self):
 	    self.bobby = Customer("Bobby Kennedy", "Boston", "MA", "98021", "206-988-8766")
 	    self.paymentmanager = PaymentManager()
-	    # # self.payments.add_payment_type(self.bobby, "Visa", "1234567890") # Using method on Payments class to add a payment type. Takes customer, payment type and account number as arguments.
-	    self.order = Order(self.bobby.customer_name)
-	    # self.order.payment_type = self.payments.get_payment_types(self.bobby) # Using method on Payments class to return payment information for specific customer. Takes customer as argument. 
+	    self.order = Order(self.bobby.customer_name) 
 	    self.orderfinalizer = OrderFinalizer()
 	    self.ordermanager = OrderManager()
 
