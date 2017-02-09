@@ -19,7 +19,7 @@ class TestCompleteOrder(unittest.TestCase):
 
 	@classmethod
 	def setUpClass(self):
-	    self.bobby = Customer("Bobby", "Kennedy", "Boston", "MA", "98021")
+	    self.bobby = Customer("Bobby Kennedy", "Boston", "MA", "98021", "206-988-8766")
 	    self.paymentmanager = PaymentManager()
 	    self.order = {"userId":"42", "products":['peanut butter', 'jelly', 'bread']}
 	    self.payment_type = {"Visa": "12345678"}
