@@ -1,10 +1,14 @@
 class Order:
+    """ The Order class creates a new order with data passed to it.
 
+    Method List   __init__, get_order_date_created, get_order_customer, get_order_payment_type, get_order_status
+    Arguments     Requires user object
+    Author        Zoe LeBlanc, Python Ponies
+    """
     def __init__(self, user):
-        '''Create order.
-        '''
+        
         self.__date_created = "2017-02-08"
-        self.__customer = 'Zoe'
+        self.__customer = user
         self.__payment_type = ""
         self.__payment_complete = False
         self.__active = True
