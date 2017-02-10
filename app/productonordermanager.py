@@ -119,9 +119,10 @@ class ProductOnOrderManager():
             cursor.execute("""
                 SELECT productId, COUNT(DISTINCT productId) 
                 FROM ProductsOnOrders
-                GROUP BY productId 
-                    """)
+                GROUP BY productId
+                """)
             selected_products = cursor.fetchall()
+
             print("test", selected_products)
             return selected_products
 

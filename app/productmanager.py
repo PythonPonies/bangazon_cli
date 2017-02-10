@@ -47,5 +47,4 @@ class ProductManager():
         return selected_product
 
 
-    def get_products_by_popularity(self):
-        pass
+
