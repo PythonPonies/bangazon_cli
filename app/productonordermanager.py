@@ -112,3 +112,14 @@ class ProductOnOrderManager():
                 """.format(0))
             remaining_products = cursor.fetchall()
             return remaining_products
+
+    def get_products_by_order_popularity(self):
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT COUNT(DISTINCT ProductId) AS products FROM ProductsOnOrders
+                    """)
+            selected_products = cursor.fetchall()
+            print("test", selected_products)
+            return selected_products
+
