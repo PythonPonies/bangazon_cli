@@ -9,7 +9,7 @@ class CustomerRegistrar():
 
     def register(customer):
         print("customer method runs")
-        """ The registrar method takes a customer as an argument and pushed customer data up to the database.
+        """ The registrar method takes a customer as an argument and pushed customer data up to the database. The customer arguement is passed so we can if a specific customer has been added to the database.
         """
 
         # Connect to the database
@@ -40,7 +40,7 @@ class CustomerRegistrar():
 
     def check_if_registered(customer):
         print("check_if_registered runs")
-        """ This method checks that the customer data we pushed up indeed was added to the database.
+        """ This method checks that the customer data we pushed up indeed was added to the database. The customer arguement is passed so we can if a specific customer has been added to the database.
         """
 
         # Connect to the database
@@ -65,17 +65,17 @@ class CustomerRegistrar():
                     )
                 )
 
-            # db_customer returns the customer tuple that was just added:
+            # db_customer returns the customer tuple that was just added in the following format:
             # (3, 'nate', '343 paper street', 'nashville', 'tn', 12345, '1234567', 0)
             db_customer = c.fetchone()
 
-            # check if what we pushed up matches the database for all values we can check
+            # check if what was pushed up matches what's in the database
             if db_customer[1] == customer.customer_name \
             and db_customer[2] == customer.street_address \
             and db_customer[3] == customer.city \
             and db_customer[4] == customer.state \
             and int(db_customer[5]) == int(customer.postal_code) \
             and db_customer[6] == customer.phone_number:
-                return True
+                return True # if yes, return true
             else:
-                return False
+                return False # if no, return false
