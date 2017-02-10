@@ -16,7 +16,7 @@ class CustomerRegistrar():
         with sqlite3.connect('../bangazon.db') as conn:
             c = conn.cursor()
 
-            # If the Customers table doesn't exist, create
+            # If the Customers table doesn't exist, create one
             c.execute("""
                 CREATE TABLE IF NOT EXISTS Customers (
                 `customerId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -31,6 +31,7 @@ class CustomerRegistrar():
             );
 
             try:
+                # insert a new customer based on the customer object passed to this method
                 c.execute("""
                     INSERT INTO `Customers` VALUES (null, '{}', '{}', '{}', '{}', '{}', '{}', {})
                     """.format(customer.customer_name, customer.street_address, customer.city, customer.state, customer.postal_code, customer.phone_number, 0))
@@ -38,4 +39,43 @@ class CustomerRegistrar():
                 return "There was an error. Please try again."
 
     def check_if_registered(customer):
-        return True
+        print("check_if_registered runs")
+        """ This method checks that the customer data we pushed up indeed was added to the database.
+        """
+
+        # Connect to the database
+        with sqlite3.connect('../bangazon.db') as conn:
+            c = conn.cursor()
+
+            c.execute("""
+                SELECT * FROM Customers
+                WHERE customer_name='{}'
+                AND street_address='{}'
+                AND city='{}'
+                AND state='{}'
+                AND postal_code='{}'
+                AND phone='{}'
+                """.format(
+                    customer.customer_name,
+                    customer.street_address,
+                    customer.city,
+                    customer.state,
+                    customer.postal_code,
+                    customer.phone_number,
+                    )
+                )
+
+            # db_customer returns the customer tuple that was just added:
+            # (3, 'nate', '343 paper street', 'nashville', 'tn', 12345, '1234567', 0)
+            db_customer = c.fetchone()
+
+            # check if what we pushed up matches the database for all values we can check
+            if db_customer[1] == customer.customer_name \
+            and db_customer[2] == customer.street_address \
+            and db_customer[3] == customer.city \
+            and db_customer[4] == customer.state \
+            and int(db_customer[5]) == int(customer.postal_code) \
+            and db_customer[6] == customer.phone_number:
+                return True
+            else:
+                return False

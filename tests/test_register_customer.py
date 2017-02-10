@@ -18,6 +18,7 @@ class TestRegisterCustomer(unittest.TestCase):
         """ This method tests if a customer can successfully register. A customer should be able to register by entering the following information:
 
             - customer name
+            - street address
             - city
             - state
             - postal code
@@ -25,7 +26,7 @@ class TestRegisterCustomer(unittest.TestCase):
         """
 
         nate = Customer("nate",             # customer name
-                        "343 paper street", #street address
+                        "343 paper street", # street address
                         "nashville",        # city
                         "tn",               # state
                         "12345",            # postal code
