@@ -8,7 +8,6 @@ class CustomerRegistrar():
     """
 
     def register(customer):
-        print("customer method runs")
         """ The registrar method takes a customer as an argument and pushed customer data up to the database. The customer arguement is passed so we can if a specific customer has been added to the database.
         """
 
@@ -39,7 +38,6 @@ class CustomerRegistrar():
                 return "There was an error. Please try again."
 
     def check_if_registered(customer):
-        print("check_if_registered runs")
         """ This method checks that the customer data we pushed up indeed was added to the database. The customer arguement is passed so we can if a specific customer has been added to the database.
         """
 
