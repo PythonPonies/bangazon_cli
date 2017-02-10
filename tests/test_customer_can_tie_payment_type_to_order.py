@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../')
-from app.ordermanager import * 
+from app.ordermanager import *
 from app.orderfinalizer import *
 from app.customer import *
 from app.paymentmanager import *
@@ -20,9 +20,9 @@ class TestCompleteOrder(unittest.TestCase):
 
 	@classmethod
 	def setUpClass(self):
-	    self.bobby = Customer("Bobby Kennedy", "Boston", "MA", "98021", "206-988-8766")
+	    self.bobby = Customer("Bobby Kennedy", '343 paper street', "Boston", "MA", "98021", "206-988-8766")
 	    self.paymentmanager = PaymentManager()
-	    self.order = Order(self.bobby.customer_name) 
+	    self.order = Order(self.bobby.customer_name)
 	    self.orderfinalizer = OrderFinalizer()
 	    self.ordermanager = OrderManager()
 

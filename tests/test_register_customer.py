@@ -18,17 +18,19 @@ class TestRegisterCustomer(unittest.TestCase):
         """ This method tests if a customer can successfully register. A customer should be able to register by entering the following information:
 
             - customer name
+            - street address
             - city
             - state
             - postal code
             - phone number
         """
 
-        nate = Customer("nate",      # customer name
-                        "nashville", # city
-                        "tn",        # state
-                        "12345",     # postal code
-                        "1234567")   # phone number
+        nate = Customer("nate",             # customer name
+                        "343 paper street", # street address
+                        "nashville",        # city
+                        "tn",               # state
+                        "12345",            # postal code
+                        "1234567")          # phone number
 
         # Test that nate is an instance of the Customer class
         self.assertIsInstance(nate, Customer)
