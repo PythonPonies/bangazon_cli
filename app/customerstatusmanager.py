@@ -7,13 +7,16 @@ class CustomerStatusManager():
         Author: L.Sales, Python Ponies
     '''
 
-    def change_status(self, user):
+    def change_status(self, customer_name):
         with sqlite3.connect('../bangazon.db') as conn:
             c = conn.cursor()
 
             try:
                 c.execute("UPDATE Customers SET active=0 WHERE active=1")
-                c.execute("UPDATE Customers SET active=1 WHERE customer_name = '{}'".format(user))
+                c.execute("UPDATE Customers SET active=1 WHERE customer_name = '{}'".format(customer_name))
+                c.execute("SELECT active FROM Customers WHERE active=1")
+                status = c.fetchall()[0][0]
+                return status
             except sqlite3.OperationalError:
                 return "There was an error. Please try again."
           
