@@ -12,11 +12,12 @@ class Customer(object):
     Arguments     The object argument lets the Customer class inherit properites of object
     Author        Nate Baker, Python Ponies
     """
-    def __init__(self, customer_name, city, state, postal_code, phone_number):
+    def __init__(self, customer_name, street_address, city, state, postal_code, phone_number):
         """
         A new customer is created based on the arguments passed in: customer_name, city, state, postal_code, and phone_number. The active switch is set to false by default and turned on when an active user is selected.
         """
         self.customer_name = customer_name
+        self.street_address = street_address
         self.city = city
         self.state = state
         self.postal_code = postal_code
@@ -26,6 +27,9 @@ class Customer(object):
 
     def get_customer_name(self):
         return self.customer_name
+
+    def get_street_address(self):
+        return self.street_address
 
     def get_city(self):
         return self.city
