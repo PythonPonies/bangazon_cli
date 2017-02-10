@@ -13,7 +13,7 @@ class TestProductOnOrder(unittest.TestCase):
     """
     This class tests everything related to placing a product on an order.
 
-    Method List   
+    Method List
     test_customer_can_create_an_order
     test_customer_can_add_product_to_an_order
     Arguments unittest.TestCase allows the unittest model to know what to test.
@@ -46,7 +46,6 @@ class TestProductOnOrder(unittest.TestCase):
     def test_customer_can_create_an_order(self):
         """ This method tests if a customer can successfully create an order. A customer should be able to create order after passing their name.
         """
-        
         self.assertIsInstance(self.order_1, Order)
         self.orderManager.create_order(self.order_1)
         self.assertIsNotNone(self.orderManager.customer_has_active_order())

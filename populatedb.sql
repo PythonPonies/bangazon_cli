@@ -35,12 +35,12 @@ CREATE TABLE `PaymentTypes` (
     FOREIGN KEY(`customerId`) REFERENCES `Customers`(`customerId`)
 );
 
-INSERT INTO PaymentTypes  
+INSERT INTO PaymentTypes
   SELECT null, 'Visa', '1234567890', customerId
   FROM Customers c
   WHERE c.customer_name = 'John Doe';
 
-INSERT INTO PaymentTypes  
+INSERT INTO PaymentTypes
   SELECT null, 'MasterCard', '0987654321', customerId
   FROM Customers c
   WHERE c.customer_name = 'Janet Jackson';
@@ -70,12 +70,12 @@ CREATE TABLE `Orders` (
     FOREIGN KEY(`paymentTypeId`) REFERENCES `PaymentTypes`(`paymentTypeId`)
 );
 
-INSERT INTO Orders  
+INSERT INTO Orders
   SELECT null, '01-01-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
   WHERE c.customer_name = 'Janet Jackson' and t.paymentTypeId = 2;
 
-INSERT INTO Orders  
+INSERT INTO Orders
   SELECT null, '02-03-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
   WHERE c.customer_name = 'John Doe' and t.paymentTypeId = 1;
