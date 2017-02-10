@@ -17,6 +17,7 @@ class Customer(object):
         """
         A new customer is created based on the arguments passed in: customer_name, street_address, city, state, postal_code, and phone_number. The active switch is set to false by default and turned on when an active user is selected.
         """
+        self.street_address = street_address
         self.customer_name = customer_name
         self.street_address = street_address
         self.city = city

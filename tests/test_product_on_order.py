@@ -2,6 +2,7 @@ import unittest
 import sys
 sys.path.append('../')
 from app.ordermanager import *
+from app.productonordermanager import *
 from app.productmanager import *
 from app.order import *
 from app.product import *
@@ -22,34 +23,56 @@ class TestProductOnOrder(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         '''Set up initial instances'''
-        self.zoe = Customer('Zoe', '343 paper street', 'Nashville', 'TN', '37205', '6158106485')
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM Products
+                WHERE productId = {}
+                """.format(3))
+            selected_product = cursor.fetchall()
+        cursor.close()
+        self.active_user = Customer(selected_user[0][1], selected_user[0][2], selected_user[0][3], selected_user[0][4], selected_user[0][5], selected_user[0][6])
         self.orderManager = OrderManager()
+        self.productOnOrderManager = ProductOnOrderManager()
         self.productManager = ProductManager()
+        self.order_1 = Order(self.active_user)
+        self.product_1 = Product(selected_product[0][1], selected_product[0][2], selected_product[0][3], selected_product[0][4])
 
     def test_customer_can_create_an_order(self):
         """ This method tests if a customer can successfully create an order. A customer should be able to create order after passing their name.
         """
-        order_1 = Order(self.zoe.customer_name)
-        self.assertIsInstance(order_1, Order)
-        self.orderManager.create_order(order_1)
-        self.assertIs(order_1, self.orderManager.get_order())
-
+        self.assertIsInstance(self.order_1, Order)
+        self.orderManager.create_order(self.order_1)
+        self.assertIsNotNone(self.orderManager.customer_has_active_order())
+       
     def test_customer_can_add_product_to_an_order(self):
         """ This method tests if a customer can successfully add a product to an order. A customer should be able to add a product to an order by passing their name and product.
         """
-        product_1 = Product("bike", 100.00, 3)
-        order_1 = Order(self.zoe.customer_name)
-        self.orderManager.add_product_to_order(order_1, product_1)
+        all_products = self.productOnOrderManager.get_all_products_on_order()
+        product = self.productManager.get_one_product(self.product_1)
+        product_is_not_on_order = False
+        for item in all_products:
+            if item[1] != product[0][0]:
+                product_is_not_on_order = True
+        self.assertTrue(product_is_not_on_order)
+        self.productOnOrderManager.add_product_to_order(self.product_1)
+        products = self.productOnOrderManager.get_all_products_on_order()
+        product_is_on_order = False
+        for item in products:
+            if item[1] == product[0][0]:
+                product_is_on_order = True
+        self.assertTrue(product_is_on_order)
+       
 
-        self.assertIs(order_1, self.orderManager.get_order())
-        self.assertIs(product_1, self.orderManager.get_products_on_order())
-
-    def test_customer_can_see_all_products_on_order(self):
+    def test_customer_can_see_all_remaining_products(self):
         """ This method tests if a customer can successfully see products on an order.
         """
-        product_1 = Product("bike", 100.00, 3)
-        self.orderManager.products = product_1
-        self.assertIsNotNone(self.orderManager.get_products_on_order())
+        self.assertIsNotNone(self.productOnOrderManager.get_all_products_not_on_order())
 
 if __name__ == '__main__':
     unittest.main()
