@@ -4,7 +4,7 @@ import sys
 sys.path.append('../')
 
 from app.paymentmanager import *
-from app.customer import *
+from app.customerstatusmanager import *
 
 
 class TestUserPaymentTypes(unittest.TestCase):
@@ -20,30 +20,31 @@ class TestUserPaymentTypes(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self.john = Customer(
-                            'John Doe',
-                            'New Orleans',
-                            'Louisiana',
-                            '12345',
-                            '111-222-3333'
-                            )
 
         self.payments = PaymentManager() # PaymentManager class for accessing methods related to payment + payment information.
+        self.active_customer = CustomerStatusManager() # CustomerManager class for accessing methods related to active customer
 
     def test_user_can_add_payment_type(self):
 
-        self.payments.add_payment_type(self.john, "Visa", "1234567890") # Using method on Payments class to add a payment type. Takes customer, payment type and account number as arguments.
-        self.payments.get_payment_types(self.john) # Using method on Payments class to return payment information for specific customer. Takes customer as argument. 
+        self.active_customer.change_status("John Doe")
+        self.payments.add_payment_type('AmEx', 1010101010)
 
-        #-------------------------------------------------------------#
-        #   PK  PAYMENT_NAME     ACCOUNT_NUMBER     CUSTOMER          #
-        #[( PK,   "Visa",       "1234567890",     customer_object   )]#
-        #    0       1                2                  3            #
-        #-------------------------------------------------------------#
 
-        for payment in self.payments.payment_types: # Iterate over list of tuples
-            self.assertEqual("Visa", payment[1]) # Check first item in tuple
-            self.assertEqual("1234567890", payment[2]) # Check second item in tuple
+        #------------------------------------------------------------------#
+        # this is how PaymentType table data is structured when returned   #
+        #                                                                  #
+        #   PK        PAYMENT_NAME     ACCOUNT_NUMBER     CUSTOMER         #
+        #[( PK,         "Visa",       "1234567890",     customer_object )] #
+        #    0             1                2                  3           #
+        #------------------------------------------------------------------#
+
+
+    def test_user_can_get_own_payment_types(self):
+
+        user_payment_types = self.payments.get_payment_types()
+
+        self.assertEqual(user_payment_types[1][1], 'AmEx')
+        self.assertEqual(user_payment_types[1][2], 1010101010)
 
 
 if __name__ == "__main__":
