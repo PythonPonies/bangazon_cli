@@ -9,43 +9,152 @@ class OrderManager():
     Author        Zoe LeBlanc & Ike, Python Ponies
     """
     def __init__(self):
-        self.order = []
-        self.products = []
+        pass
 
     def create_order(self, order):
         """
         A new order is created based on the arguments passed in: order. 
         """
-        self.order = order
-        return self
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS `Orders`
+                (
+                    orderId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    date_created TEXT NOT NULL,
+                    payment_complete INTEGER NOT NULL,
+                    customerId INTEGER NOT NULL,
+                    paymentTypeId INTEGER NOT NULL,
+                    FOREIGN KEY(customerId) REFERENCES Customers (customerId),
+                    FOREIGN KEY(paymentTypeId) REFERENCES PaymentTypes (paymentTypeId)
+                )
+            """)
+            user = order.get_order_customer()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchall()
+            print(selected_user[0][0])
+            try:
+                cursor.execute(""" 
+                    SELECT * FROM Order
+                    WHERE customerId = {}
+                    AND payment_complete = {}
+                    """.format(selected_user[0][0], 0))
+                selected_order = cursor.fetchall()
+            except: 
+                cursor.execute("""
+                    INSERT INTO Orders VALUES 
+                    (null, '{}', '{}', '{}', {}) 
+                    """.format(order.get_order_date_created(), 2, None, order.get_order_payment_complete()))
+        cursor.close()
 
-    def customer_has_not_paid(self, order):
+    def customer_has_active_order(self):
         """
         Checks if customer has an active order. 
         """
-        return order.get_order_payment_complete()
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM Orders 
+                WHERE CustomerId = '{}'
+                AND payment_complete = {} 
+                """.format(selected_user[0][0], 0))
+            selected_order = cursor.fetchall() 
+            return selected_order
+        cursor.close()
 
-    def add_product_to_order(self, order, product):
+    def add_product_to_order(self, product):
         """
         Adds a new product to an order. 
         """
-        self.products = product
-        self.order = order
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS `ProductsOnOrders`
+                (
+                    productsOnOrderId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    productId INTEGER NOT NULL,
+                    orderId INTEGER NOT NULL,
+                    FOREIGN KEY(productId) REFERENCES Products (productId),
+                    FOREIGN KEY(orderId) REFERENCES Orders (orderId)
+                )
+            """)
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM Orders
+                WHERE customerId = '{}'
+                AND payment_complete = {} 
+                """.format(selected_user[0][0], 0))
+            selected_order = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM Products
+                WHERE title = '{}'
+                AND description = '{}'
+                AND price = {}
+                AND quantity = {} 
+                """.format(product.get_product_title(), product.get_product_description(), product.get_product_price(), product.get_product_quantity()))
+            selected_product = cursor.fetchall()
+            cursor.execute("""
+                INSERT INTO ProductsOnOrders 
+                VALUES (null, {}, {}) """.format(selected_product[0][0], selected_order[0][0]))
+        cursor.close()
 
-        return self
-
-    def get_products_on_order(self):
+    def get_all_products_on_order(self):
         """
         Gets all products on order. 
         """
-        return self.products
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM Orders
+                WHERE customerId = '{}'
+                AND payment_complete = {} 
+                """.format(selected_user[0][0], 0))
+            selected_order = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM ProductsOnOrders
+                WHERE orderId = '{}' 
+                """.format(selected_order[0][0]))
+            selected_product = cursor.fetchall()
+        return selected_product
 
 
-    def get_order(self):
+    def get_all_orders_by_customer(self):
         """
         Gets all products on order. 
         """
-        return self.order
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM Orders
+                WHERE customerId = '{}' 
+                """.format(selected_user[0][0]))
+            selected_order = cursor.fetchall()
+        return selected_order
 
 
     def check_cart_contains_items(self, order):
