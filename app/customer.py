@@ -21,7 +21,8 @@ class Customer(object):
         self.state = state
         self.postal_code = postal_code
         self.phone_number = phone_number
-        self.active = False # This is false by default so it doesn't need to be an argument
+        self.active = 0
+        # Active is false by default so it doesn't need to be an argument. SQLite doesn't have a boolean so it takes 0 or 1
 
     def get_customer_name(self):
         return self.customer_name
