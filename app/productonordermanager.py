@@ -117,7 +117,9 @@ class ProductOnOrderManager():
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT COUNT(DISTINCT ProductId) AS products FROM ProductsOnOrders
+                SELECT productId, COUNT(DISTINCT productId) 
+                FROM ProductsOnOrders
+                GROUP BY productId 
                     """)
             selected_products = cursor.fetchall()
             print("test", selected_products)

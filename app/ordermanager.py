@@ -30,7 +30,6 @@ class OrderManager():
                     FOREIGN KEY(paymentTypeId) REFERENCES PaymentTypes (paymentTypeId)
                 )
             """)
-            user = order.get_order_customer()
             cursor.execute("""
                 SELECT * FROM Customers
                 WHERE active = {}
@@ -48,7 +47,7 @@ class OrderManager():
                 cursor.execute("""
                     INSERT INTO Orders VALUES 
                     (null, '{}', '{}', '{}', {}) 
-                    """.format(order.get_order_date_created(), 2, None, order.get_order_payment_complete()))
+                    """.format(order.get_order_date_created(), selected_user[0][0], None, order.get_order_payment_complete()))
         cursor.close()
 
     def customer_has_active_order(self):
