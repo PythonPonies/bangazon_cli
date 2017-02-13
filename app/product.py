@@ -15,13 +15,21 @@ class Product:
         self.__quantity = quantity
 
     def get_product_title(self):
+        """ get_product_title returns the name of a product object. Self is needed as an argument to access the product object.
+        """
         return self.__title
 
     def get_product_description(self):
+        """ get_product_description returns the description of a product object. Self is needed as an argument to access the product object.
+        """
         return self.__description
 
     def get_product_price(self):
+        """ get_product_price returns the price of a product object. Self is needed as an argument to access the product object.
+        """
         return self.__price
 
     def get_product_quantity(self):
+        """ get_product_quantity returns the quantity of a product object. Self is needed as an argument to access the product object.
+        """
         return self.__quantity
