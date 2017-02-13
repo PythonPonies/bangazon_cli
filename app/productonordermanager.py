@@ -13,7 +13,7 @@ class ProductOnOrderManager():
 
     def add_product_to_order(self, product):
         """
-        Adds a new product to an order. 
+        This method adds a new product to the active order and checks if the product has quantity remaining. If not in stock, the method returns a message to the user about the product. 
         """
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
@@ -64,7 +64,7 @@ class ProductOnOrderManager():
 
     def get_all_products_on_order(self):
         """
-        Gets all products on order. 
+        This method returns all products on the active order. 
         """
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
@@ -89,7 +89,7 @@ class ProductOnOrderManager():
 
     def get_all_products_not_on_order(self):
         """
-        Gets all products not on order. 
+        This method returns all products not currently on the active order. 
         """
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
@@ -119,7 +119,7 @@ class ProductOnOrderManager():
         cursor.close()
 
     def get_products_by_order_popularity(self):
-        """List Product Names, Number of Orders, Number of Customers, Revenue. Totals for last three. """
+        """This method returns all products by order popularity and ONLY for completed orders. The result is table returned including product names, number of orders, number of customers who ordered the product, and revenue for each product. The final row is calculates totals for the final three columns. If we want ALL orders, remove the AND o.payment_complete line from both queries"""
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -133,6 +133,7 @@ class ProductOnOrderManager():
                 ON po.productId = p.productId
                 INNER JOIN Orders o
                 ON po.orderId = o.orderId
+                AND o.payment_complete = 1
                 GROUP BY po.productId 
                 ORDER BY (ProductOrders) DESC
                 ) 
@@ -146,6 +147,7 @@ class ProductOnOrderManager():
                 ON po.productId = p.productId
                 INNER JOIN Orders o
                 ON po.orderId = o.orderId
+                AND o.payment_complete = 1
                 """)
             selected_products = cursor.fetchall()
             return selected_products
