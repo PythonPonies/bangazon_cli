@@ -38,10 +38,8 @@ class OrderFinalizer():
                 .format(cid[0])
                 )
                 selected_order = cursor.fetchone() #this is the one order from active user
-                print(selected_order, "this is the selected order from order finalizer function")
                 cursor.execute("""SELECT productId FROM ProductsOnOrders WHERE orderId = '{}'""".format(selected_order[0]))
                 products_on_selected_order = cursor.fetchall()
-                print(products_on_selected_order, "these are the products on the order in my function")
                 return products_on_selected_order
 
             except sqlite3.OperationalError:

@@ -47,7 +47,6 @@ class ProductOnOrderManager():
                 AND quantity = {} 
                 """.format(product.get_product_title(), product.get_product_description(), product.get_product_price(), product.get_product_quantity()))
             selected_product = cursor.fetchone()
-            print(selected_product, "this is selected prod w zoe")
             if selected_product[4] > 0:
                 cursor.execute("""
                 INSERT INTO ProductsOnOrders 
