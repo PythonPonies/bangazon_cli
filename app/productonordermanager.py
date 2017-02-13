@@ -48,15 +48,18 @@ class ProductOnOrderManager():
                 AND quantity = {} 
                 """.format(product.get_product_title(), product.get_product_description(), product.get_product_price(), product.get_product_quantity()))
             selected_product = cursor.fetchall()
-            cursor.execute("""
-                INSERT INTO ProductsOnOrders 
-                VALUES (null, {}, {}) """.format(selected_product[0][0], selected_order[0][0]))
-            decrease_value = selected_product[0][4]-1
-            cursor.execute("""
-                UPDATE Products
-                SET quantity = {}
-                WHERE productId = {} 
-                """.format(decrease_value, selected_product[0][0]))
+            if selected_product[0][4] > 0:
+                cursor.execute("""
+                    INSERT INTO ProductsOnOrders 
+                    VALUES (null, {}, {}) """.format(selected_product[0][0], selected_order[0][0]))
+                decrease_value = selected_product[0][4]-1
+                cursor.execute("""
+                    UPDATE Products
+                    SET quantity = {}
+                    WHERE productId = {} 
+                    """.format(decrease_value, selected_product[0][0]))
+            else: 
+                print("Product {} is not in stock".format(selected_product[0][1]))
         cursor.close()
 
     def get_all_products_on_order(self):
