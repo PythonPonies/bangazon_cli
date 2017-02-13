@@ -72,6 +72,8 @@ class TestProductOnOrder(unittest.TestCase):
     def test_customer_can_see_all_remaining_products(self):
         """ This method tests if a customer can successfully see products on an order.
         """
+        
+        print(self.productOnOrderManager.get_products_by_order_popularity())
         self.assertIsNotNone(self.productOnOrderManager.get_all_products_not_on_order())
 
 if __name__ == '__main__':
