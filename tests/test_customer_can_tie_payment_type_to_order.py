@@ -23,28 +23,12 @@ class TestCompleteOrder(unittest.TestCase):
         methods: test_products_have_been_added
     """
 
-    # @classmethod
-    # def setUpClass(self):
-    #     self.bobby = Customer("Bobby Kennedy", '343 paper street', "Boston", "MA", 98021, '2069888766')
-    #     self.paymentmanager = PaymentManager()
-    #     self.order = Order(self.bobby)
-    #     self.orderfinalizer = OrderFinalizer()
-    #     self.ordermanager = OrderManager()
-    #     self.productonordermanager = ProductOnOrderManager()
-    #     self.customerregistrar = CustomerRegistrar()
-
-
     def test_check_that_an_order_is_empty(self):
         """
         purpose: test to check if the cart is empty
         author: Ike
         methods: get_ordered_products: returns a list of products
         """
-    #     # registration = CustomerRegistrar()
-    #     # registration.register(jfk)
-    #     # # self.customerregistrar.register(robert)
-    #SHOULDN'T NEED THIS STUFF ABOVE HERE...
-        # import pdb; pdb.set_trace()
         jfk = Customer("John Kennedy", '1819 Heron Pointe Dr', "Nashville", "TN", 37214, '8889878888')
         manage_status = CustomerStatusManager()
         make_jfk_active_user = manage_status.change_status(jfk)
