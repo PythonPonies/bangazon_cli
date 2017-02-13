@@ -51,7 +51,6 @@ class CustomerRegistrar():
         """
 
         # Connect to the database
-        print("customer", customer.get_city())
         with sqlite3.connect('../bangazon.db') as conn:
             c = conn.cursor()
             c.execute("""
