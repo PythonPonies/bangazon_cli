@@ -16,7 +16,7 @@ class TestUserIsActive(unittest.TestCase):
 		Customer1 = Customer('John Doe', '123 Testing Way', 'Exampleville', 'FL', "12345", '123-456-1234')
 
 		#assert that the property of 'active' on user is true
-		status = CustomerStatusManager.change_status(self, Customer1.customer_name)
+		status = CustomerStatusManager.change_status(self, Customer1)
 		self.assertEqual(status, 1)
 
 if __name__ == '__main__':

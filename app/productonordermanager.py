@@ -153,5 +153,29 @@ class ProductOnOrderManager():
             return selected_products
         cursor.close()
            
-        
-
+    def remove_all_products_from_order(self):
+        """This method removes all products from active order"""
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM Orders
+                WHERE customerId = '{}'
+                AND payment_complete = {} 
+                """.format(selected_user[0][0], 0))
+            selected_order = cursor.fetchall()
+            cursor.execute("""
+                SELECT * FROM ProductsOnOrders
+                WHERE orderId = '{}' 
+                """.format(selected_order[0][0]))
+            selected_products_on_order = cursor.fetchall()
+            for product in selected_products_on_order:
+                cursor.execute("""
+                DELETE FROM ProductsOnOrders
+                WHERE productId = {} 
+                """.format(product[1]))
+            cursor.close()

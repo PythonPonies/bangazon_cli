@@ -6,6 +6,7 @@ from app.orderfinalizer import *
 from app.customer import *
 from app.paymentmanager import *
 from app.order import *
+from app.productonordermanager import *
 
 
 
@@ -22,7 +23,7 @@ class TestCompleteOrder(unittest.TestCase):
 	def setUpClass(self):
 	    self.bobby = Customer("Bobby Kennedy", '343 paper street', "Boston", "MA", "98021", "206-988-8766")
 	    self.paymentmanager = PaymentManager()
-	    self.order = Order(self.bobby.customer_name)
+	    self.order = Order(self.bobby)
 	    self.orderfinalizer = OrderFinalizer()
 	    self.ordermanager = OrderManager()
 
@@ -32,7 +33,8 @@ class TestCompleteOrder(unittest.TestCase):
 		author: Ike
 		methods: get_ordered_products: returns a list of products
 		"""
-		product = OrderManager()
+		product = ProductOnOrderManager()
+		product.remove_all_products_from_order()
 		self.assertEqual(product.get_products_on_order(), [])
 
 	def test_check_that_order_can_be_completed(self):

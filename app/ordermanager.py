@@ -36,18 +36,20 @@ class OrderManager():
                 """.format(1))
             selected_user = cursor.fetchall()
             print(selected_user[0][0])
-            try:
-                cursor.execute(""" 
-                    SELECT * FROM Orders
-                    WHERE customerId = {}
-                    AND payment_complete = {}
-                    """.format(selected_user[0][0], 0))
-                selected_order = cursor.fetchall()
-            except: 
+            cursor.execute(""" 
+                SELECT * FROM Orders
+                WHERE customerId = {}
+                AND payment_complete = {}
+                """.format(selected_user[0][0], 0))
+            selected_order = cursor.fetchall()
+            print(selected_order)
+            if len(selected_order) == 0: 
                 cursor.execute("""
                     INSERT INTO Orders VALUES 
                     (null, '{}', '{}', '{}', {}) 
                     """.format(order.get_order_date_created(), selected_user[0][0], None, order.get_order_payment_complete()))
+                selected_order = cursor.fetchall()
+                print(selected_order)
         cursor.close()
 
     def customer_has_active_order(self):
