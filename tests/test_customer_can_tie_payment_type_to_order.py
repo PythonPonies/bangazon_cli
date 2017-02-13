@@ -64,6 +64,14 @@ class TestCompleteOrder(unittest.TestCase):
         author: Ike
         methods: get_ordered_products: returns a list of products
         """
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM Products
+                WHERE productId = {}
+                """.format(4))
+            selected_product = cursor.fetchone()
+            cursor.close()
 
         rfk = Customer("Robert Kennedy", '1919 Heron Pointe Dr', "Nashville", "TN", 37214, '8888978880')
         status_manager = CustomerStatusManager()
@@ -72,7 +80,7 @@ class TestCompleteOrder(unittest.TestCase):
         manage_order = OrderManager()
         rfk_order = manage_order.create_order(start_rfk_order) #an order is created in the database
         manage_products_on_order = ProductOnOrderManager()
-        gear = Product('nike medcon', 'training shoes', 95.27, 50)
+        gear = Product(selected_product[1],selected_product[2], selected_product[3], selected_product[4])
         manage_products_on_order.add_product_to_order(gear)
         current_order = manage_products_on_order.get_all_products_on_order() #get all products on active user's order
         finalize_order = OrderFinalizer()
