@@ -65,4 +65,5 @@ if __name__ == "__main__":
         leave_bangazon.CLILeaveBangazon.leave_bangazon()
     # and if not, handle the default action
     else:
-        print("you typed something else")
+        # show full menu if you press another key
+        CommandLineInterface.PrintFullMenu()
