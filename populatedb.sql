@@ -72,7 +72,7 @@ INSERT INTO Orders
   WHERE c.customer_name = 'Janet Jackson' and t.paymentTypeId = 2;
 
 INSERT INTO Orders
-  SELECT null, '02-03-2017', c.customerId, t.paymentTypeId, 0
+  SELECT null, '02-03-2017', c.customerId, t.paymentTypeId, 1
   FROM Customers c, PaymentTypes t
   WHERE c.customer_name = 'John Doe' and t.paymentTypeId = 1;
 

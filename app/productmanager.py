@@ -33,7 +33,7 @@ class ProductManager():
         return selected_product
 
     def get_one_product(self, product):
-        """Gets all products in the database"""
+        """Gets one products in the database"""
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -41,11 +41,9 @@ class ProductManager():
                 WHERE title = '{}'
                 AND description = '{}'
                 AND price = {}
-                AND quantity = {} 
-                """.format(product.get_product_title(), product.get_product_description(), product.get_product_price(), product.get_product_quantity()))
-            selected_product = cursor.fetchall()
+                """.format(product.get_product_title(), product.get_product_description(), product.get_product_price()))
+            selected_product = cursor.fetchone()
         return selected_product
 
 
-    def get_products_by_popularity(self):
-        pass
+

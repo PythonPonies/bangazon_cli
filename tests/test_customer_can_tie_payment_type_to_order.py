@@ -13,6 +13,7 @@ from app.customerstatusmanager import *
 
 
 
+
 class TestCompleteOrder(unittest.TestCase):
     """
         purpose:
@@ -43,10 +44,10 @@ class TestCompleteOrder(unittest.TestCase):
     #     # registration.register(jfk)
     #     # # self.customerregistrar.register(robert)
     #SHOULDN'T NEED THIS STUFF ABOVE HERE...
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         jfk = Customer("John Kennedy", '1819 Heron Pointe Dr', "Nashville", "TN", 37214, '8889878888')
         manage_status = CustomerStatusManager()
-        make_jfk_active_user = manage_status.change_status(jfk.customer_name)
+        make_jfk_active_user = manage_status.change_status(jfk)
         start_jfk_order = Order(jfk)
         manage_order = OrderManager()
         jfk_order = manage_order.create_order(start_jfk_order) #an order is created in the database
@@ -66,18 +67,19 @@ class TestCompleteOrder(unittest.TestCase):
 
         rfk = Customer("Robert Kennedy", '1919 Heron Pointe Dr', "Nashville", "TN", 37214, '8888978880')
         status_manager = CustomerStatusManager()
-        status_manager.change_status("Robert Kennedy")
+        status_manager.change_status(rfk)
         start_rfk_order = Order(rfk)
         manage_order = OrderManager()
         rfk_order = manage_order.create_order(start_rfk_order) #an order is created in the database
         manage_products_on_order = ProductOnOrderManager()
-        gear = Product('nike medcon', 'training shoes', 95.27, 300)
+        gear = Product('nike medcon', 'training shoes', 95.27, 50)
         manage_products_on_order.add_product_to_order(gear)
         current_order = manage_products_on_order.get_all_products_on_order() #get all products on active user's order
         finalize_order = OrderFinalizer()
         active_order_status = finalize_order.check_cart_contains_items()
         self.assertNotEqual(active_order_status, [])
         self.assertNotEqual(start_rfk_order.get_order_payment_type(),'None')
+
 
 
 if __name__ == "__main__":
