@@ -29,15 +29,10 @@ class TestProductOnOrder(unittest.TestCase):
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT * FROM Customers
-                WHERE active = {}
-                """.format(1))
-            selected_user = cursor.fetchone()
-            cursor.execute("""
                 SELECT * FROM Products
                 WHERE productId = {}
                 """.format(3))
-            selected_product = cursor.fetchall()
+            selected_product = cursor.fetchone()
         cursor.close()
         self.active_user = Customer("zoe",  "343 paper street",  "nashville", "tn", "12345", "1234567") 
         CustomerRegistrar.register(self.active_user)
@@ -45,7 +40,7 @@ class TestProductOnOrder(unittest.TestCase):
         self.orderManager = OrderManager()
         self.productOnOrderManager = ProductOnOrderManager()
         self.productManager = ProductManager()
-        self.product_1 = Product(selected_product[0][1], selected_product[0][2], selected_product[0][3], selected_product[0][4])
+        self.product_1 = Product(selected_product[1], selected_product[2], selected_product[3], selected_product[4])
         self.order_1 = Order(self.active_user)
         self.orderManager.create_order(self.order_1)
 
