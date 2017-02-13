@@ -8,10 +8,10 @@ from app.customerstatusmanager import *
 
 
 class TestUserPaymentTypes(unittest.TestCase):
-    """ 
+    """
         This class tests aspects of a user's ability to add payment types to their account.
 
-        Methods: 
+        Methods:
             test_user_can_add_payment_type - Tests that a user will have associated payment type information.
                 Arguments: Customer name, payment type, account number
 
@@ -20,6 +20,7 @@ class TestUserPaymentTypes(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
+
 
         self.payments = PaymentManager() # PaymentManager class for accessing methods related to payment + payment information.
         self.active_customer = CustomerStatusManager() # CustomerManager class for accessing methods related to active customer

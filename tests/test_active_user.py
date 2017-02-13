@@ -1,5 +1,5 @@
 import unittest
-import sys 
+import sys
 sys.path.append('../')
 from app.customer import *
 from app.customerstatusmanager import *
@@ -12,10 +12,12 @@ class TestUserIsActive(unittest.TestCase):
 	#Test to determine if user is active
 	def test_customer_is_active(self):
 		#establish an instance of a user
-		Customer1 = Customer('Paul Breckenridge', 'Somerville', 'MA', "23567", '265-345-9867')
+
+		Customer1 = Customer('John Doe', '123 Testing Way', 'Exampleville', 'FL', "12345", '123-456-1234')
+
 		#assert that the property of 'active' on user is true
-		CustomerStatusManager.change_status(Customer1)
-		self.assertTrue(Customer1.active)
+		status = CustomerStatusManager.change_status(self, Customer1.customer_name)
+		self.assertEqual(status, 1)
 
 if __name__ == '__main__':
-    unittest.main()  
+    unittest.main()

@@ -1,3 +1,4 @@
+import datetime
 class Order:
     """ The Order class creates a new order with data passed to it.
 
@@ -7,10 +8,10 @@ class Order:
     """
     def __init__(self, user):
         
-        self.__date_created = "2017-02-08"
+        self.__date_created = datetime.datetime.now()
         self.__customer = user
         self.payment_type = []
-        self.__payment_complete = False
+        self.__payment_complete = 1
 
     def get_order_date_created(self):
         return self.__date_created

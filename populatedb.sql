@@ -24,7 +24,7 @@ CREATE TABLE `Customers` (
 );
 
 INSERT INTO Customers VALUES (null, 'John Doe', '123 Testing Way', 'Exampleville', 'Florida', '12345', '123-456-1234', 0);
-INSERT INTO Customers VALUES (null, 'Janet Jackson', '555 Poptart Drive', 'Beverly Hills', 'California', '90210', '911-111-1111', 0);
+INSERT INTO Customers VALUES (null, 'Janet Jackson', '555 Poptart Drive', 'Beverly Hills', 'California', '90210', '911-111-1111', 1);
 
 
 CREATE TABLE `PaymentTypes` (
@@ -35,12 +35,12 @@ CREATE TABLE `PaymentTypes` (
     FOREIGN KEY(`customerId`) REFERENCES `Customers`(`customerId`)
 );
 
-INSERT INTO PaymentTypes  
+INSERT INTO PaymentTypes
   SELECT null, 'Visa', '1234567890', customerId
   FROM Customers c
   WHERE c.customer_name = 'John Doe';
 
-INSERT INTO PaymentTypes  
+INSERT INTO PaymentTypes
   SELECT null, 'MasterCard', '0987654321', customerId
   FROM Customers c
   WHERE c.customer_name = 'Janet Jackson';
@@ -50,14 +50,14 @@ CREATE TABLE `Products` (
     `productId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     `title` TEXT NOT NULL,
     `description` TEXT NOT NULL,
-    `price` TEXT NOT NULL,
+    `price` DECIMAL(18,2) NOT NULL,
     `quantity` INTEGER NOT NULL
 );
 
-INSERT INTO Products VALUES (null, 'Bicycle', 'Two wheels, one speed', '$300', 10);
-INSERT INTO Products VALUES (null, 'Ice Cream', 'Chocolate', '$5', 55);
-INSERT INTO Products VALUES (null, 'Soccer Ball', 'Perfect for soccer', '$15', 14);
-INSERT INTO Products VALUES (null, 'Plastic Cups', 'For drinking things', '$2', 300);
+INSERT INTO Products VALUES (null, 'Bicycle', 'Two wheels, one speed', 300.00, 10);
+INSERT INTO Products VALUES (null, 'Ice Cream', 'Chocolate', 5.00, 55);
+INSERT INTO Products VALUES (null, 'Soccer Ball', 'Perfect for soccer', 15.00, 14);
+INSERT INTO Products VALUES (null, 'Plastic Cups', 'For drinking things', 2.00, 300);
 
 
 CREATE TABLE `Orders` (
@@ -70,12 +70,12 @@ CREATE TABLE `Orders` (
     FOREIGN KEY(`paymentTypeId`) REFERENCES `PaymentTypes`(`paymentTypeId`)
 );
 
-INSERT INTO Orders  
+INSERT INTO Orders
   SELECT null, '01-01-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
   WHERE c.customer_name = 'Janet Jackson' and t.paymentTypeId = 2;
 
-INSERT INTO Orders  
+INSERT INTO Orders
   SELECT null, '02-03-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
   WHERE c.customer_name = 'John Doe' and t.paymentTypeId = 1;
@@ -84,7 +84,9 @@ INSERT INTO Orders
 CREATE TABLE `ProductsOnOrders` (
     `productsOnOrderId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     `productId` INTEGER NOT NULL,
-    `orderId` INTEGER NOT NULL
+    `orderId` INTEGER NOT NULL,
+    FOREIGN KEY(`productId`) REFERENCES `Products`(`productId`),
+    FOREIGN KEY(`orderId`) REFERENCES `Orders`(`orderId`)
 );
 
 INSERT INTO ProductsOnOrders
