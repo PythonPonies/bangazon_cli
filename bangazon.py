@@ -39,30 +39,30 @@ class CommandLineInterface():
 
 # If the customer accesses this file via the command line...
 if __name__ == "__main__":
-
     # and types the following commands, do the following...
     if sys.argv[1] == "menu":
         CommandLineInterface.PrintStartMenu()
-
     elif sys.argv[1] == "1":
-        print("you typed 1")
-        # CLICreateCustomer.create_customer()
-
+        # 1. Create a customer account
+        create_customer.CLICreateCustomer.create_customer()
+        # file in cli_modules > class > method
     elif sys.argv[1] == "2":
-        print("you typed 2")
-
+        # 2. Choose active customer
+        choose_active_customer.CLIChooseActiveCustomer.choose_active_customer()
     elif sys.argv[1] == "3":
-        print("you typed 3")
-
+        # 3. Create a payment option
+        create_payment.CLICreatePayment.create_payment()
     elif sys.argv[1] == "4":
-        print("you typed 4")
-
+        # 4. Add product to shopping cart
+        add_product.CLIAddProduct.add_product()
     elif sys.argv[1] == "5":
-        print("you typed 5")
-
+        # 5. Complete an order
+        complete_order.CLICompleteOrder.complete_order()
+    # elif sys.argv[1] == "6":
+    # placeholder for printing all products
     elif sys.argv[1] == "7":
-        print("you typed 7")
-
+        # 7. Leave Bangazon!
+        leave_bangazon.CLILeaveBangazon.leave_bangazon()
     # and if not, handle the default action
     else:
         print("you typed something else")
