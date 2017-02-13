@@ -32,7 +32,7 @@ class TestProductOnOrder(unittest.TestCase):
                 SELECT * FROM Customers
                 WHERE active = {}
                 """.format(1))
-            selected_user = cursor.fetchall()
+            selected_user = cursor.fetchone()
             cursor.execute("""
                 SELECT * FROM Products
                 WHERE productId = {}
@@ -55,18 +55,13 @@ class TestProductOnOrder(unittest.TestCase):
         """
         self.assertIsInstance(self.order_1, Order)
         self.assertIsNotNone(self.orderManager.customer_has_active_order())
-    
-
         
     def test_customer_can_add_product_to_an_order(self):
         """ This method tests if a customer can successfully add a product to an order. A customer should be able to add a product to an order by passing their product.
         """
-        # import pdb; pdb.set_trace()
         self.productOnOrderManager.add_product_to_order(self.product_1)
         product = self.productManager.get_one_product(self.product_1)
-        print("product", product)
         products = self.productOnOrderManager.get_all_products_on_order()
-        print("products", products)
         product_is_on_order = False
         for item in products:
             if item[1] == product[0]:

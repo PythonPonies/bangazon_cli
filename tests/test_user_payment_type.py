@@ -5,6 +5,7 @@ sys.path.append('../')
 
 from app.paymentmanager import *
 from app.customerstatusmanager import *
+from app.customer import *
 
 
 class TestUserPaymentTypes(unittest.TestCase):
@@ -26,8 +27,15 @@ class TestUserPaymentTypes(unittest.TestCase):
         self.active_customer = CustomerStatusManager() # CustomerManager class for accessing methods related to active customer
 
     def test_user_can_add_payment_type(self):
-
-        self.active_customer.change_status("John Doe")
+        with sqlite3.connect('../bangazon.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE customer_name = '{}'
+                """.format("John Doe"))
+            selected_customer = cursor.fetchone()
+        john = Customer(selected_customer[1], selected_customer[2], selected_customer[3], selected_customer[4], selected_customer[5], selected_customer[6])
+        self.active_customer.change_status(john)
         self.payments.add_payment_type('AmEx', 1010101010)
 
 
