@@ -39,7 +39,7 @@ class PaymentManager():
             """)
 
             c.execute("""
-                        INSERT INTO PaymentTypes VALUES (null, '{}', '{}', '{}') 
+                        INSERT INTO PaymentTypes VALUES (null, '{}', {}, {}) 
                         """.format(
                                     payment_name,
                                     account_number,
@@ -62,7 +62,7 @@ class PaymentManager():
             c.execute("""
                         SELECT *
                         FROM PaymentTypes 
-                        WHERE customerId = '{}'
+                        WHERE customerId = {}
                 """.format(
                             customer[0][0]))
             customer_payment_types = c.fetchall()

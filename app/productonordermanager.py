@@ -15,7 +15,6 @@ class ProductOnOrderManager():
         """
         This method adds a new product to the active order and checks if the product has quantity remaining. If not in stock, the method returns a message to the user about the product. 
         """
-        # import pdb; pdb.set_trace()
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -34,17 +33,12 @@ class ProductOnOrderManager():
                 WHERE active = {}
                 """.format(1))
             selected_user = cursor.fetchone()
-            print("selected user", selected_user)
-
             cursor.execute("""
                 SELECT * FROM Orders
                 WHERE customerId = {}
                 AND payment_complete = {} 
                 """.format(selected_user[0], 0))
             selected_order = cursor.fetchone()
-
-
-            print("selected_order", selected_order)
             cursor.execute("""
                 SELECT * FROM Products
                 WHERE title = '{}'
@@ -53,16 +47,10 @@ class ProductOnOrderManager():
                 AND quantity = {} 
                 """.format(product.get_product_title(), product.get_product_description(), product.get_product_price(), product.get_product_quantity()))
             selected_product = cursor.fetchone()
-            
             if selected_product[4] > 0:
-                print("selected product", selected_product)
-                print("selected order", selected_order)
-
                 cursor.execute("""
                 INSERT INTO ProductsOnOrders 
                 VALUES (null, {}, {}) """.format(selected_product[0], selected_order[0]))
-
-
                 decrease_value = selected_product[4]-1
                 cursor.execute("""
                     UPDATE Products
