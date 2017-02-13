@@ -16,13 +16,14 @@ class TestProductOnOrder(unittest.TestCase):
     Method List
     test_customer_can_create_an_order
     test_customer_can_add_product_to_an_order
+    test_customer_can_see_all_remaining_products_not_on_order
     Arguments unittest.TestCase allows the unittest model to know what to test.
     Author Zoe LeBlanc, Python Ponies
     """
 
     @classmethod
     def setUpClass(self):
-        '''Set up initial instances'''
+        '''This method sets up initial instances of Customer, Product, OrderManger, ProductOnOrderManager, and Product Manager from the database'''
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -44,14 +45,14 @@ class TestProductOnOrder(unittest.TestCase):
         self.product_1 = Product(selected_product[0][1], selected_product[0][2], selected_product[0][3], selected_product[0][4])
 
     def test_customer_can_create_an_order(self):
-        """ This method tests if a customer can successfully create an order. A customer should be able to create order after passing their name.
+        """ This method tests if a customer can successfully create an order. A customer should be able to create order after passing the user object.
         """
         self.assertIsInstance(self.order_1, Order)
         self.orderManager.create_order(self.order_1)
         self.assertIsNotNone(self.orderManager.customer_has_active_order())
        
     def test_customer_can_add_product_to_an_order(self):
-        """ This method tests if a customer can successfully add a product to an order. A customer should be able to add a product to an order by passing their name and product.
+        """ This method tests if a customer can successfully add a product to an order. A customer should be able to add a product to an order by passing their product.
         """
         all_products = self.productOnOrderManager.get_all_products_on_order()
         product = self.productManager.get_one_product(self.product_1)
@@ -69,10 +70,9 @@ class TestProductOnOrder(unittest.TestCase):
         self.assertTrue(product_is_on_order)
        
 
-    def test_customer_can_see_all_remaining_products(self):
-        """ This method tests if a customer can successfully see products on an order.
+    def test_customer_can_see_all_remaining_products_not_on_order(self):
+        """ This method tests if a customer can successfully see products not on an order.
         """
-        
         print(self.productOnOrderManager.get_products_by_order_popularity())
         self.assertIsNotNone(self.productOnOrderManager.get_all_products_not_on_order())
 
