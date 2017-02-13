@@ -76,5 +76,10 @@ class TestProductOnOrder(unittest.TestCase):
         print(self.productOnOrderManager.get_products_by_order_popularity())
         self.assertIsNotNone(self.productOnOrderManager.get_all_products_not_on_order())
 
+    def test_customer_can_see_product_popularity(self):
+        """ This method tests if a customer can successfully see products by popularity.
+        """
+        self.assertIsNotNone(self.productOnOrderManager.get_products_by_order_popularity())
+
 if __name__ == '__main__':
     unittest.main()
