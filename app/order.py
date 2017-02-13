@@ -11,7 +11,7 @@ class Order:
         self.__date_created = datetime.datetime.now()
         self.__customer = user
         self.payment_type = []
-        self.__payment_complete = 1
+        self.__payment_complete = 0
 
     def get_order_date_created(self):
         return self.__date_created

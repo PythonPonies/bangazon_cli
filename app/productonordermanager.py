@@ -81,7 +81,8 @@ class ProductOnOrderManager():
                 WHERE orderId = '{}' 
                 """.format(selected_order[0][0]))
             selected_product = cursor.fetchall()
-        return selected_product
+            return selected_product
+        cursor.close()
 
     def get_all_products_not_on_order(self):
         """
@@ -112,17 +113,40 @@ class ProductOnOrderManager():
                 """.format(0))
             remaining_products = cursor.fetchall()
             return remaining_products
+        cursor.close()
 
     def get_products_by_order_popularity(self):
+        """List Product Names, Number of Orders, Number of Customers, Revenue. Totals for last three. """
         with sqlite3.connect('../bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT productId, COUNT(DISTINCT productId) 
-                FROM ProductsOnOrders
-                GROUP BY productId
+                SELECT * FROM (
+                SELECT p.title as Name, 
+                COUNT(*) as ProductOrders,
+                COUNT(DISTINCT o.customerId) as CustomerOrders,
+                SUM(p.price) as Revenue
+                FROM ProductsOnOrders po
+                INNER JOIN Products p
+                ON po.productId = p.productId
+                INNER JOIN Orders o
+                ON po.orderId = o.orderId
+                GROUP BY po.productId 
+                ORDER BY (ProductOrders) DESC
+                ) 
+                UNION ALL
+                SELECT 'Totals' as Name, 
+                COUNT(*) as ProductOrders, 
+                SUM(DISTINCT o.customerId) as CustomerOrders, 
+                SUM(p.price) as Revenue
+                FROM ProductsOnOrders po
+                INNER JOIN Products p
+                ON po.productId = p.productId
+                INNER JOIN Orders o
+                ON po.orderId = o.orderId
                 """)
             selected_products = cursor.fetchall()
-
-            print("test", selected_products)
             return selected_products
+        cursor.close()
+           
+        
 

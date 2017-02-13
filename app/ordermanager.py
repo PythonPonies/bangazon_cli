@@ -38,7 +38,7 @@ class OrderManager():
             print(selected_user[0][0])
             try:
                 cursor.execute(""" 
-                    SELECT * FROM Order
+                    SELECT * FROM Orders
                     WHERE customerId = {}
                     AND payment_complete = {}
                     """.format(selected_user[0][0], 0))

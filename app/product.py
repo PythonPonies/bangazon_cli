@@ -15,6 +15,7 @@ class Product:
         self.__quantity = quantity
 
     def get_product_title(self):
+        
         return self.__title
 
     def get_product_description(self):
