@@ -41,6 +41,13 @@ class TestRegisterCustomer(unittest.TestCase):
         # Test that it's true that the customer is registered
         self.assertTrue(CustomerRegistrar.check_if_registered(nate))
 
+    def test_list_of_customers_returned(self):
+        """
+        This method tests if a list of tuples is returned when asking for a list of customers.
+        """
+        customers = Customer.get_customer_list()
+        assert isinstance(customers, list)
+        assert isinstance(customers[0], tuple)
 
 if __name__ == "__main__":
     unittest.main()

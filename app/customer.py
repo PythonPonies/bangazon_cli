@@ -3,12 +3,13 @@ class Customer(object):
 
     Method List:
         - __init__: instansiates the new Customer with customer_name, city, state, postal_code, and phone_number
-        - get_customer_name:
-        - get_street_address:
-        - get_city:
-        - get_state:
-        - get_postal_code:
+        - get_customer_name
+        - get_street_address
+        - get_city
+        - get_state
+        - get_postal_code
         - get_phone_number
+        - get_customer_list
 
     Arguments     The object argument lets the Customer class inherit properites of object
     Author        Nate Baker, Python Ponies
@@ -61,3 +62,6 @@ class Customer(object):
         """ get_active returns the active value for a customer. This returns true or false based on if the customer is the active customer. Self is needed as an argument to access the customer object.
         """
         return self.__active
+
+    def get_customer_list():
+        pass
