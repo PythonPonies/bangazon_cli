@@ -66,7 +66,7 @@ class Customer(object):
         return self.__active
 
     def get_customer_list(db_path):
-        """ Returns a list of tuples with each tuple being a customer from the database.
+        """ Returns a list of tuples with each tuple being a customer from the database. The db_path argument allows this method to be called from different execution contexts and still connect to the database with the correct path.
         """
         # Connect to the database
         with sqlite3.connect(db_path) as conn:
