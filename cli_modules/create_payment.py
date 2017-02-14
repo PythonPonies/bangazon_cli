@@ -7,7 +7,7 @@ from app.customer import *
 
 class bcolors:
     """
-        The bcolors class variables relevant to adding color to the command line interface.
+        The bcolors class contains variables relevant to adding color to the command line interface.
 
         Resource: 'http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python'
 
