@@ -13,7 +13,7 @@ This is a continuation of the work started here: https://github.com/PythonPonies
 
   1. *Important to Note*: This is not an actual shell. It functions on the basis of `sysargs` so you will need to run `python bangazon.py` and the appropriate number for the command you'd like to run. For example, if you want to create a user, then you would run `python bangazon.py 1` to see that interface. If you already have an account and would like to select it, then you would run `python bangazon.py 2`.
   
-5. On each page, you will respond to the prompts in order to move along the interface and create orders, add products, and complete purchases. Wherever there is a menu showing, you will need to remember to run `pythob bangazon.py --` where the -- is the number of the menu item you'd like to navigate to.
+5. On each page, you will respond to the prompts in order to move along the interface and create orders, add products, and complete purchases. Wherever there is a menu showing, you will need to remember to run `python bangazon.py --` where the -- is the number of the menu item you'd like to navigate to.
 
 6. Entering any command other than `python bangazon.py [1-7] or menu` will return you to the main menu. Ex: `python bangazon.py 9` or `python bangazon.py home` will return you to the main menu.
 
