@@ -1,1 +1,1 @@
-__all__ = ['create_customer', 'choose_active_customer', 'create_payment', 'add_product', 'complete_order', 'leave_bangazon']
+__all__ = ['create_customer', 'choose_active_customer', 'create_payment', 'add_product', 'complete_order', 'leave_bangazon', 'product_popularity']

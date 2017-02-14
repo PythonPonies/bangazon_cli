@@ -20,6 +20,7 @@ class CommandLineInterface():
             3. Create a payment option
             4. Add product to shopping cart
             5. Complete an order
+            6. List products by popularity
             7. Leave Bangazon!
         """
         )
@@ -48,7 +49,7 @@ if __name__ == "__main__":
         # file in cli_modules > class > method
     elif sys.argv[1] == "2":
         # 2. Choose active customer
-        choose_active_customer.CLIChooseActiveCustomer.choose_active_customer()
+        choose_active_customer.CLIChooseActiveCustomer.show_customers_list()
     elif sys.argv[1] == "3":
         # 3. Create a payment option
         create_payment.CLICreatePayment.create_payment()
@@ -58,8 +59,9 @@ if __name__ == "__main__":
     elif sys.argv[1] == "5":
         # 5. Complete an order
         complete_order.CLICompleteOrder.complete_order()
-    # elif sys.argv[1] == "6":
-    # placeholder for printing all products
+    elif sys.argv[1] == "6":
+        # 6. List Products by Popularity
+        product_popularity.CLIProductPopularity.list_product()
     elif sys.argv[1] == "7":
         # 7. Leave Bangazon!
         leave_bangazon.CLILeaveBangazon.leave_bangazon()

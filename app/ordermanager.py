@@ -15,7 +15,7 @@ class OrderManager():
         """
         A new order is created based on the arguments passed in: order. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute(
             """
@@ -45,7 +45,7 @@ class OrderManager():
                 cursor.execute("""
                     INSERT INTO Orders VALUES 
                     (null, '{}', '{}', '{}', {}) 
-                    """.format(order.get_order_date_created(), selected_user[0][0], None, order.get_order_payment_complete()))
+                    """.format(order.get_order_date_created(), selected_user[0][0], None, order.get_order_payment_complete(), 0))
                 selected_order = cursor.fetchall()
         cursor.close()
 
@@ -53,7 +53,7 @@ class OrderManager():
         """
         Checks if customer has an active order. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -73,7 +73,7 @@ class OrderManager():
         """
         Adds a new product to an order. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             
             cursor.execute(
@@ -115,7 +115,7 @@ class OrderManager():
         """
         Gets all products on order. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -140,7 +140,7 @@ class OrderManager():
         """
         Gets all products on order. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers

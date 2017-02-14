@@ -15,7 +15,7 @@ class ProductOnOrderManager():
         """
         This method adds a new product to the active order and checks if the product has quantity remaining. If not in stock, the method returns a message to the user about the product. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute(
             """
@@ -65,7 +65,7 @@ class ProductOnOrderManager():
         """
         This method returns all products on the active order. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -90,7 +90,7 @@ class ProductOnOrderManager():
         """
         This method returns all products not currently on the active order. 
         """
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -119,7 +119,7 @@ class ProductOnOrderManager():
 
     def get_products_by_order_popularity(self):
         """This method returns all products by order popularity and ONLY for completed orders. The result is table returned including product names, number of orders, number of customers who ordered the product, and revenue for each product. The final row is calculates totals for the final three columns. If we want ALL orders, remove the AND o.payment_complete line from both queries"""
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM (
@@ -132,7 +132,7 @@ class ProductOnOrderManager():
                 ON po.productId = p.productId
                 INNER JOIN Orders o
                 ON po.orderId = o.orderId
-                AND o.payment_complete = 1
+                -- AND o.payment_complete = 1
                 GROUP BY po.productId 
                 ORDER BY (ProductOrders) DESC
                 ) 
@@ -146,7 +146,7 @@ class ProductOnOrderManager():
                 ON po.productId = p.productId
                 INNER JOIN Orders o
                 ON po.orderId = o.orderId
-                AND o.payment_complete = 1
+                -- AND o.payment_complete = 1
                 """)
             selected_products = cursor.fetchall()
             return selected_products
@@ -154,7 +154,7 @@ class ProductOnOrderManager():
            
     def remove_all_products_from_order(self):
         """This method removes all products from active order"""
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -179,33 +179,3 @@ class ProductOnOrderManager():
                 AND orderId = {} 
                 """.format(product[1], selected_order[0]))
             cursor.close()
-
-         # cursor.execute("""
-         #        SELECT * FROM (
-         #        SELECT p.title as Name, 
-         #        SUM(p.price) as ProductOrders
-         #        FROM Products p
-         #        INNER JOIN ProductsOnOrders po
-         #        ON po.productId = p.productId
-         #        INNER JOIN Orders o
-         #        ON po.orderId = o.orderId
-         #        AND o.payment_complete = 1
-         #        INNER JOIN Customers c
-         #        ON c.customerId = o.customerId
-         #        AND c.active = 1
-         #        GROUP BY po.productId 
-         #        ORDER BY (ProductOrders) DESC
-         #        ) 
-         #        UNION ALL
-         #        SELECT 'Totals' as Name,  
-         #        SUM(p.price) as Revenue
-         #        FROM Products p
-         #        INNER JOIN ProductsOnOrders po
-         #        ON po.productId = p.productId
-         #        INNER JOIN Orders o
-         #        ON po.orderId = o.orderId
-         #        AND o.payment_complete = 1
-         #        INNER JOIN Customers c
-         #        ON c.customerId = o.customerId
-         #        AND c.active = 1
-         #        """)
