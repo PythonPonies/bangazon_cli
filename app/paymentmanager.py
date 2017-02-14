@@ -4,7 +4,7 @@ class PaymentManager():
     """
         The Payments class contains all methods and properties related to a customer's payment information and actions.
 
-        Methods: 
+        Methods:
                 - add_payment_type
 
                 - get_payment_types
@@ -12,16 +12,16 @@ class PaymentManager():
         Author: Steven Holmes (Python Ponies [Bangazon, LLC])
     """
 
-    def add_payment_type(self, payment_name, account_number):
+    def add_payment_type(self, payment_name, account_number, db_path):
         """
             Adds payment type to customer account
 
-            Arguments: 
+            Arguments:
                     payment_name - payment type name (eg. Visa)
                     account_number - account number of payment type
         """
 
-        with sqlite3.connect("bangazon.db") as bangazon:
+        with sqlite3.connect(db_path) as bangazon:
             c = bangazon.cursor()
 
             c.execute("SELECT customerId FROM Customers WHERE active = 1")
@@ -39,13 +39,13 @@ class PaymentManager():
             """)
 
             c.execute("""
-                        INSERT INTO PaymentTypes VALUES (null, '{}', {}, {}) 
+                        INSERT INTO PaymentTypes VALUES (null, '{}', {}, {})
                         """.format(
                                     payment_name,
                                     account_number,
                                     customer[0][0]))
 
-    def get_payment_types(self):
+    def get_payment_types(self, db_path):
         """
             Gets payment types of customer
 
@@ -53,7 +53,7 @@ class PaymentManager():
                     customer - customer to get payment types for
         """
 
-        with sqlite3.connect("bangazon.db") as bangazon:
+        with sqlite3.connect(db_path) as bangazon:
             c = bangazon.cursor()
 
             c.execute("SELECT customerId FROM Customers WHERE active = 1")
@@ -61,7 +61,7 @@ class PaymentManager():
 
             c.execute("""
                         SELECT *
-                        FROM PaymentTypes 
+                        FROM PaymentTypes
                         WHERE customerId = {}
                 """.format(
                             customer[0][0]))

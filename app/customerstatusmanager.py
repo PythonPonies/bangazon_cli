@@ -7,8 +7,8 @@ class CustomerStatusManager():
         Author: L.Sales, Python Ponies
     '''
 
-    def change_status(self, customer):
-        with sqlite3.connect('bangazon.db') as conn:
+    def change_status(self, customer, db_path):
+        with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
 
             try:
@@ -19,7 +19,7 @@ class CustomerStatusManager():
                 return status
             except sqlite3.OperationalError:
                 return "There was an error. Please try again."
-          
+
 if __name__ == '__main__':
     activeUser = CustomerStatusManager()
     activeUser.change_status(1)

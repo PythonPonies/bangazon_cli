@@ -1,10 +1,12 @@
 import sqlite3
 
 class ProductManager():
-    
+    def __init__(self, db_path):
+        self.db_path = db_path
+
     def create_product(self, product):
         """Method creates a product"""
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS `Products`
@@ -24,7 +26,7 @@ class ProductManager():
 
     def get_all_products(self):
         """Gets all products in the database"""
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Products
@@ -34,7 +36,7 @@ class ProductManager():
 
     def get_one_product(self, product):
         """Gets one products in the database"""
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Products

@@ -8,14 +8,14 @@ class ProductOnOrderManager():
     Arguments     The object argument lets the Order Manager class inherit properites of object
     Author        Zoe LeBlanc, Python Ponies
     """
-    def __init__(self):
-        pass
+    def __init__(self, db_path):
+        self.db_path = db_path
 
     def add_product_to_order(self, product):
         """
         This method adds a new product to the active order and checks if the product has quantity remaining. If not in stock, the method returns a message to the user about the product. 
         """
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
             """
@@ -65,7 +65,7 @@ class ProductOnOrderManager():
         """
         This method returns all products on the active order. 
         """
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -90,7 +90,7 @@ class ProductOnOrderManager():
         """
         This method returns all products not currently on the active order. 
         """
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -119,7 +119,7 @@ class ProductOnOrderManager():
 
     def get_products_by_order_popularity(self):
         """This method returns all products by order popularity and ONLY for completed orders. The result is table returned including product names, number of orders, number of customers who ordered the product, and revenue for each product. The final row is calculates totals for the final three columns. If we want ALL orders, remove the AND o.payment_complete line from both queries"""
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM (
@@ -154,7 +154,7 @@ class ProductOnOrderManager():
            
     def remove_all_products_from_order(self):
         """This method removes all products from active order"""
-        with sqlite3.connect('bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Customers

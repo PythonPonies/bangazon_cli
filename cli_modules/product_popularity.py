@@ -21,7 +21,7 @@ class bcolors:
 class CLIProductPopularity():
 
     def list_product():
-        all_products = ProductOnOrderManager().get_products_by_order_popularity()
+        all_products = ProductOnOrderManager('bangazon.db').get_products_by_order_popularity()
         product_column = 18
         order_column = 11
         customer_column = 11

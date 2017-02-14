@@ -18,7 +18,7 @@ class CLIChooseActiveCustomer():
 
     def choose_active_customer(active_customer):
         new_user = CustomerStatusManager()
-        new_user.change_status(active_customer)
+        new_user.change_status(active_customer, 'bangazon.db')
         print("""
             *********************************************************
             **  Welcome to Bangazon! Command Line Ordering System  **

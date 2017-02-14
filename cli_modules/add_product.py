@@ -35,9 +35,9 @@ class CLIAddProduct():
             selected_user = cursor.fetchone()
         cursor.close()
         new_order = Order(selected_user)
-        new_order_manager = OrderManager()
+        new_order_manager = OrderManager('bangazon.db')
         new_order_manager.create_order(new_order)
-        list_of_products = ProductOnOrderManager().get_all_products_not_on_order()
+        list_of_products = ProductOnOrderManager('bangazon.db').get_all_products_not_on_order()
         products_list = "Number. Product Price Quantity \n"
         for product in list_of_products:
             products_list += "{}. {}, {}, {} \n".format(product[0], product[1], product[3], product[4])
@@ -71,7 +71,7 @@ class CLIAddProduct():
                 """.format(active_product))
             selected_product = cursor.fetchone()
         new_product = Product(selected_product[1], selected_product[2], selected_product[3], selected_product[4])
-        input_product = ProductOnOrderManager()  
+        input_product = ProductOnOrderManager('bangazon.db')  
         input_product.add_product_to_order(new_product)
         CLIAddProduct.add_product()  
 
