@@ -71,5 +71,6 @@ class Customer(object):
         # Connect to the database
         with sqlite3.connect('../bangazon.db') as conn:
             c = conn.cursor()
-            c.execute("SELECT * FROM Customers") # select all customers
-            return c.fetchall() # return all customers
+            # select all customers, but only getch id and name
+            c.execute("SELECT customerId, customer_name FROM Customers")
+            return c.fetchall() # fetch data

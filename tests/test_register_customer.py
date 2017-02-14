@@ -46,8 +46,9 @@ class TestRegisterCustomer(unittest.TestCase):
         This method tests if a list of tuples is returned when asking for a list of customers.
         """
         customers = Customer.get_customer_list()
-        assert isinstance(customers, list)
-        assert isinstance(customers[0], tuple)
+        self.assertIsInstance(customers, list)
+        self.assertIsInstance(customers[0], tuple)
+
 
 if __name__ == "__main__":
     unittest.main()
