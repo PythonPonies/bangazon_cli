@@ -13,13 +13,14 @@ class CustomerStatusManager():
 
             try:
                 c.execute("UPDATE Customers SET active=0 WHERE active=1")
-                c.execute("UPDATE Customers SET active=1 WHERE customer_name = '{}'".format(customer.get_customer_name()))
+                c.execute("UPDATE Customers SET active=1 WHERE customerId = '{}'".format(customer))
                 c.execute("SELECT active FROM Customers WHERE active=1")
                 status = c.fetchall()[0][0]
+                print(status)
                 return status
             except sqlite3.OperationalError:
                 return "There was an error. Please try again."
           
 if __name__ == '__main__':
     activeUser = CustomerStatusManager()
-    activeUser.change_status("John Doe")
+    activeUser.change_status(1)
