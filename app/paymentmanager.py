@@ -21,7 +21,7 @@ class PaymentManager():
                     account_number - account number of payment type
         """
 
-        with sqlite3.connect("../bangazon.db") as bangazon:
+        with sqlite3.connect("bangazon.db") as bangazon:
             c = bangazon.cursor()
 
             c.execute("SELECT customerId FROM Customers WHERE active = 1")
@@ -53,7 +53,7 @@ class PaymentManager():
                     customer - customer to get payment types for
         """
 
-        with sqlite3.connect("../bangazon.db") as bangazon:
+        with sqlite3.connect("bangazon.db") as bangazon:
             c = bangazon.cursor()
 
             c.execute("SELECT customerId FROM Customers WHERE active = 1")

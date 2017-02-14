@@ -48,7 +48,7 @@ if __name__ == "__main__":
         # file in cli_modules > class > method
     elif sys.argv[1] == "2":
         # 2. Choose active customer
-        choose_active_customer.CLIChooseActiveCustomer.choose_active_customer()
+        choose_active_customer.CLIChooseActiveCustomer.show_customers_list()
     elif sys.argv[1] == "3":
         # 3. Create a payment option
         create_payment.CLICreatePayment.create_payment()
