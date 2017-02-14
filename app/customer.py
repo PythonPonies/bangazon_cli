@@ -1,3 +1,5 @@
+import sqlite3
+
 class Customer(object):
     """ The Customer class creates a new Customer with data passed to it.
 
@@ -64,4 +66,10 @@ class Customer(object):
         return self.__active
 
     def get_customer_list():
-        pass
+        """ Returns a list of tuples with each tuple being a customer from the database.
+        """
+        # Connect to the database
+        with sqlite3.connect('../bangazon.db') as conn:
+            c = conn.cursor()
+            c.execute("SELECT * FROM Customers") # select all customers
+            return c.fetchall() # return all customers
