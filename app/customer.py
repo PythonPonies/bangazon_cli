@@ -1,14 +1,17 @@
+import sqlite3
+
 class Customer(object):
     """ The Customer class creates a new Customer with data passed to it.
 
     Method List:
         - __init__: instansiates the new Customer with customer_name, city, state, postal_code, and phone_number
-        - get_customer_name:
-        - get_street_address:
-        - get_city:
-        - get_state:
-        - get_postal_code:
+        - get_customer_name
+        - get_street_address
+        - get_city
+        - get_state
+        - get_postal_code
         - get_phone_number
+        - get_customer_list
 
     Arguments     The object argument lets the Customer class inherit properites of object
     Author        Nate Baker, Python Ponies
@@ -61,3 +64,13 @@ class Customer(object):
         """ get_active returns the active value for a customer. This returns true or false based on if the customer is the active customer. Self is needed as an argument to access the customer object.
         """
         return self.__active
+
+    def get_customer_list():
+        """ Returns a list of tuples with each tuple being a customer from the database.
+        """
+        # Connect to the database
+        with sqlite3.connect('../bangazon.db') as conn:
+            c = conn.cursor()
+            # select all customers, but only getch id and name
+            c.execute("SELECT customerId, customer_name FROM Customers")
+            return c.fetchall() # fetch data
