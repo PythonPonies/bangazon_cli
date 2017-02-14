@@ -14,7 +14,7 @@ class OrderFinalizer():
         -check_order_is_complete
     """
 
-    def check_cart_contains_items(self):
+    def check_cart_contains_items():
 
         """
         purpose: Determine whether the cart has items by returning status
@@ -24,12 +24,13 @@ class OrderFinalizer():
                 - order: A list of products, an empty list returns False
 
         """ 
-        with sqlite3.connect("../bangazon.db") as databae:
+        with sqlite3.connect("bangazon.db") as databae:
             cursor = databae.cursor()
             try:
                 cursor.execute('SELECT customerId FROM `Customers` WHERE active = 1'
                 )
                 cid = cursor.fetchone()
+                # import pdb; pdb.set_trace()
                 cursor.execute("""
                     SELECT * FROM Orders
                     WHERE payment_complete = 0
@@ -38,15 +39,18 @@ class OrderFinalizer():
                 .format(cid[0])
                 )
                 selected_order = cursor.fetchone() #this is the one order from active user
-                cursor.execute("""SELECT productId FROM ProductsOnOrders WHERE orderId = '{}'""".format(selected_order[0]))
+                cursor.execute("""SELECT productId FROM ProductsOnOrders WHERE orderId = {}""".format(selected_order[0]))
                 products_on_selected_order = cursor.fetchall()
-                return products_on_selected_order
+                if products_on_selected_order:
+                    return True
+                # return products_on_selected_order
 
             except sqlite3.OperationalError:
-                return []
+                return False
+                # return []
 
 
-    def complete_order(self):
+    def complete_order(selected_payment_option):
         """
         purpose: Complete an order by tying a payment_type to an order
         author: Ike
@@ -58,7 +62,7 @@ class OrderFinalizer():
             - status: flag to ensure the order contains items (is active?)
         """
 
-        with sqlite3.connect("../bangazon.db") as databae:
+        with sqlite3.connect("bangazon.db") as databae:
             cursor = databae.cursor()
             # try:
 
@@ -72,6 +76,7 @@ class OrderFinalizer():
                 """.format(cid)
             )
             selected_payment_type = cursor.fetchall()[0][0]
+            selected_payment_option = int(selected_payment_option)
             cursor.execute("""
                 UPDATE  Orders
                 SET payment_complete = 1 
@@ -84,7 +89,7 @@ class OrderFinalizer():
                 SET paymentTypeId = {}
                 WHERE paymentTypeId = 'None'
                 AND customerId = {}
-                """.format(selected_payment_type, cid)
+                """.format(selected_payment_option, cid)
             )
             cursor.execute("""
                 SELECT * FROM  Orders
@@ -93,10 +98,22 @@ class OrderFinalizer():
                 """.format(cid)
             )
             payment_status = cursor.fetchall()[0][4]
-            return payment_status
+            # print(payment_status)
+            # print('Your order is complete! Press any key to return to main menu')
+            # print("""*********************************************************
+            #     **  Welcome to Bangazon! Command Line Ordering System  **
+            #     *********************************************************
+            #     1. Create a customer account
+            #     2. Choose active customer
+            #     3. Create a payment option
+            #     4. Add product to shopping cart
+            #     5. Complete an order
+            #     7. Leave Bangazon!""")
+            # return payment_status
+            return "Your order is complete! Press any key to return to main menu"
 
-    def order_total(self):
-        with sqlite3.connect("../bangazon.db") as databae:
+    def order_total():
+        with sqlite3.connect("bangazon.db") as databae:
             cursor = databae.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
@@ -119,16 +136,11 @@ class OrderFinalizer():
                 JOIN Customers
                 ON Orders.customerId = Customers.customerId
                 AND Customers.active = {}
-                AND Orders.payment_complete = 1
+                AND Orders.payment_complete = 0
                 GROUP BY ProductsOnOrders.orderId;
                 """.format(selected_user[7]))
             total = cursor.fetchone()[0]
             return total
-
-
-
-
-
 
             # cursor.execute("""
             #     SELECT * FROM Orders
