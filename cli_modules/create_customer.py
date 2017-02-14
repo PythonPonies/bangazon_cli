@@ -38,9 +38,8 @@ class CLICreateCustomer():
         # currently, the newly registered customer is NOT set as active customer. This needs to be done manually.
 
         # provide success message
-        print("""The customer " + customer_name + " registered successfully.
-
-            """)
+        print("")
+        print("The customer " + customer_name + " registered successfully.")
 
         #show full menu
         print("""
