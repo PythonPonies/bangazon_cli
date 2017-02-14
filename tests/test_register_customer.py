@@ -45,7 +45,7 @@ class TestRegisterCustomer(unittest.TestCase):
         """
         This method tests if a list of tuples is returned when asking for a list of customers.
         """
-        customers = Customer.get_customer_list()
+        customers = Customer.get_customer_list('../bangazon.db')
         self.assertIsInstance(customers, list)
         self.assertIsInstance(customers[0], tuple)
 
