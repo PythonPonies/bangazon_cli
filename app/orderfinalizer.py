@@ -93,8 +93,62 @@ class OrderFinalizer():
                 """.format(cid)
             )
             payment_status = cursor.fetchall()[0][4]
-            return payment_status     
-    
+            return payment_status
+
+    def order_total(self):
+        with sqlite3.connect("../bangazon.db") as databae:
+            cursor = databae.cursor()
+            cursor.execute("""
+                SELECT * FROM Customers
+                WHERE active = {}
+                """.format(1))
+            selected_user = cursor.fetchone()
+            cursor.execute("""
+                SELECT * FROM Orders
+                WHERE customerId = {}
+                -- AND payment_complete = 0
+                """.format(selected_user[0]))
+            selected_order = cursor.fetchone()[0]
+            cursor.execute("""
+                SELECT SUM(Products.price) as revenue, Products.productId, ProductsOnOrders.orderId
+                FROM ProductsOnOrders
+                JOIN Products
+                ON Products.productId = ProductsOnOrders.productId
+                JOIN Orders
+                On ProductsOnOrders.orderId = Orders.orderId
+                JOIN Customers
+                ON Orders.customerId = Customers.customerId
+                AND Customers.active = {}
+                AND Orders.payment_complete = 1
+                GROUP BY ProductsOnOrders.orderId;
+                """.format(selected_user[7]))
+            total = cursor.fetchone()[0]
+            return total
+
+
+
+
+
+
+            # cursor.execute("""
+            #     SELECT * FROM Orders
+            #     WHERE customerId = {}
+            #     -- AND payment_complete = 0
+            #     """.format(selected_user[0]))
+            # selected_order = cursor.fetchone()
+            # cursor.execute("""
+            #     SELECT productId FROM ProductsOnOrders
+            #     WHERE orderId = {}
+            #     """.format(selected_order[0]))
+            # selected_products = cursor.fetchall()
+
+            # list_of_selected_products = []
+            # for item in selected_products:
+            #     single_item = list(item)
+            #     list_of_selected_products.extend(single_item)
+
+            # print(list_of_selected_products)
+
 
 
             # except:
@@ -121,5 +175,6 @@ class OrderFinalizer():
 if __name__ == '__main__':
     new_order = OrderFinalizer()
     new_order.complete_order()
+    new_order.order_total()
 
 
