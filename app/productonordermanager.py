@@ -180,32 +180,32 @@ class ProductOnOrderManager():
                 """.format(product[1], selected_order[0]))
             cursor.close()
 
-         cursor.execute("""
-                SELECT * FROM (
-                SELECT p.title as Name, 
-                SUM(p.price) as ProductOrders
-                FROM Products p
-                INNER JOIN ProductsOnOrders po
-                ON po.productId = p.productId
-                INNER JOIN Orders o
-                ON po.orderId = o.orderId
-                AND o.payment_complete = 1
-                INNER JOIN Customers c
-                ON c.customerId = o.customerId
-                AND c.active = 1
-                GROUP BY po.productId 
-                ORDER BY (ProductOrders) DESC
-                ) 
-                UNION ALL
-                SELECT 'Totals' as Name,  
-                SUM(p.price) as Revenue
-                FROM Products p
-                INNER JOIN ProductsOnOrders po
-                ON po.productId = p.productId
-                INNER JOIN Orders o
-                ON po.orderId = o.orderId
-                AND o.payment_complete = 1
-                INNER JOIN Customers c
-                ON c.customerId = o.customerId
-                AND c.active = 1
-                """)
+         # cursor.execute("""
+         #        SELECT * FROM (
+         #        SELECT p.title as Name, 
+         #        SUM(p.price) as ProductOrders
+         #        FROM Products p
+         #        INNER JOIN ProductsOnOrders po
+         #        ON po.productId = p.productId
+         #        INNER JOIN Orders o
+         #        ON po.orderId = o.orderId
+         #        AND o.payment_complete = 1
+         #        INNER JOIN Customers c
+         #        ON c.customerId = o.customerId
+         #        AND c.active = 1
+         #        GROUP BY po.productId 
+         #        ORDER BY (ProductOrders) DESC
+         #        ) 
+         #        UNION ALL
+         #        SELECT 'Totals' as Name,  
+         #        SUM(p.price) as Revenue
+         #        FROM Products p
+         #        INNER JOIN ProductsOnOrders po
+         #        ON po.productId = p.productId
+         #        INNER JOIN Orders o
+         #        ON po.orderId = o.orderId
+         #        AND o.payment_complete = 1
+         #        INNER JOIN Customers c
+         #        ON c.customerId = o.customerId
+         #        AND c.active = 1
+         #        """)

@@ -43,7 +43,7 @@ class CustomerRegistrar():
             selected_customer = c.fetchall()
             if len(selected_customer) == 0:
                 c.execute("""
-                    INSERT INTO `Customers` VALUES (null, '{}', '{}', '{}', '{}', '{}', '{}', {})
+                    INSERT INTO Customers VALUES (null, '{}', '{}', '{}', '{}', '{}', '{}', {})
                     """.format(customer.get_customer_name(), customer.get_street_address(), customer.get_city(), customer.get_state(), customer.get_postal_code(), customer.get_phone_number(), 0))
 
     def check_if_registered(customer):

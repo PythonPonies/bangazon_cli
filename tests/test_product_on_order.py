@@ -34,7 +34,7 @@ class TestProductOnOrder(unittest.TestCase):
                 """.format(3))
             selected_product = cursor.fetchone()
         cursor.close()
-        self.active_user = Customer("zoe",  "343 paper street",  "nashville", "tn", "12345", "1234567") 
+        self.active_user = Customer("test",  "343 paper street",  "nashville", "tn", "12345", "1234567") 
         CustomerRegistrar.register(self.active_user)
         status = CustomerStatusManager.change_status(self, self.active_user)
         self.orderManager = OrderManager()

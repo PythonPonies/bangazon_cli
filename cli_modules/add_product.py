@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../')
+
 class CLIAddProduct():
 
     def add_product():
