@@ -36,7 +36,7 @@ class TestProductOnOrder(unittest.TestCase):
         cursor.close()
         self.active_user = Customer("zoe",  "343 paper street",  "nashville", "tn", "12345", "1234567")
         CustomerRegistrar.register(self.active_user, '../bangazon.db')
-        status = CustomerStatusManager.change_status(self, self.active_user)
+        status = CustomerStatusManager.change_status(self, self.active_user, 'bangazon.db')
         self.orderManager = OrderManager()
         self.productOnOrderManager = ProductOnOrderManager()
         self.productManager = ProductManager()

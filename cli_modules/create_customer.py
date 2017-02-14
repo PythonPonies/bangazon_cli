@@ -22,9 +22,6 @@ class CLICreateCustomer(object):
             phone_number
         )
 
-        print(new_customer)
-        print(new_customer.get_customer_name())
-
         CustomerRegistrar.register(new_customer, 'bangazon.db')
 
         print("The customer " + customer_name + " registered successfully")
