@@ -44,13 +44,13 @@ class CLICreatePayment():
             *      CREATE NEW PAYMENT TYPE          *
             *****************************************
             """)
-        payment_name = input(bcolors.OKGREEN + """
+        payment_name = input(bcolors.OKBLUE + """
 
             Enter payment type (e.g. AmEx, Visa, Checking)
 
             > """ + bcolors.ENDC)
 
-        account_number = input(bcolors.OKGREEN + """
+        account_number = input(bcolors.OKBLUE + """
 
             Enter account number
 
@@ -58,5 +58,5 @@ class CLICreatePayment():
 
         payment.add_payment_type(payment_name, account_number)
 
-        print(bcolors.WARNING + 'Successfully added ' + payment_name + ' (#' + account_number + ') payment method to your account.')
+        print(bcolors.OKBLUE + 'Successfully added ' + payment_name + ' (#' + account_number + ') payment method to your account.')
 
