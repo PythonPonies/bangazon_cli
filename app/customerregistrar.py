@@ -1,18 +1,30 @@
 import sqlite3
 
+print("customer registrar called")
+
 class CustomerRegistrar():
+
     """ CustomerRegistrar handles registering a customer.
 
     Method List   register, check_if_registered
     Author        Nate Baker, Python Ponies
     """
 
-    def register(customer):
+    def register(customer, db_path):
+
+        print("name: " + customer.get_customer_name())
+        print("street: " + customer.get_street_address())
+        print("city: " + customer.get_city())
+        print("state: " + customer.get_state())
+        print("postal code: ")
+        print(customer.get_postal_code())
+        print("number: " + customer.get_phone_number())
+        print("register method called")
         """ The registrar method takes a customer as an argument and pushed customer data up to the database. The customer arguement is passed so we can if a specific customer has been added to the database.
         """
 
         # Connect to the database
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
 
             # If the Customers table doesn't exist, create one
@@ -37,14 +49,18 @@ class CustomerRegistrar():
                 AND street_address = '{}'
                 AND city = '{}'
                 AND state = '{}'
-                AND postal_code = '{}' 
-                AND phone = '{}'  
+                AND postal_code = {}
+                AND phone = '{}'
             """.format(customer.get_customer_name(), customer.get_street_address(), customer.get_city(), customer.get_state(), customer.get_postal_code(), customer.get_phone_number()))
             selected_customer = c.fetchall()
+            print("length of selected customer: ")
+            print(selected_customer)
             if len(selected_customer) == 0:
-                c.execute("""
-                    INSERT INTO `Customers` VALUES (null, '{}', '{}', '{}', '{}', '{}', '{}', {})
-                    """.format(customer.get_customer_name(), customer.get_street_address(), customer.get_city(), customer.get_state(), customer.get_postal_code(), customer.get_phone_number(), 0))
+
+                print("nothing in there")
+
+                c.execute("INSERT INTO Customers VALUES (null, '{}', '{}', '{}', '{}', {}, '{}', {})".format(customer.get_customer_name(), customer.get_street_address(), customer.get_city(), customer.get_state(), customer.get_postal_code(), customer.get_phone_number(), 0)
+                    )
 
     def check_if_registered(customer):
         """ This method checks that the customer data we pushed up indeed was added to the database. The customer arguement is passed so we can if a specific customer has been added to the database.

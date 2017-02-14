@@ -34,8 +34,8 @@ class TestProductOnOrder(unittest.TestCase):
                 """.format(3))
             selected_product = cursor.fetchone()
         cursor.close()
-        self.active_user = Customer("zoe",  "343 paper street",  "nashville", "tn", "12345", "1234567") 
-        CustomerRegistrar.register(self.active_user)
+        self.active_user = Customer("zoe",  "343 paper street",  "nashville", "tn", "12345", "1234567")
+        CustomerRegistrar.register(self.active_user, '../bangazon.db')
         status = CustomerStatusManager.change_status(self, self.active_user)
         self.orderManager = OrderManager()
         self.productOnOrderManager = ProductOnOrderManager()
@@ -50,7 +50,7 @@ class TestProductOnOrder(unittest.TestCase):
         """
         self.assertIsInstance(self.order_1, Order)
         self.assertIsNotNone(self.orderManager.customer_has_active_order())
-        
+
     def test_customer_can_add_product_to_an_order(self):
         """ This method tests if a customer can successfully add a product to an order. A customer should be able to add a product to an order by passing their product.
         """
@@ -62,13 +62,13 @@ class TestProductOnOrder(unittest.TestCase):
             if item[1] == product[0]:
                 product_is_on_order = True
         self.assertTrue(product_is_on_order)
-       
+
     def test_remove_all_products_from_order(self):
         """This method tests if a customer can remove all products from their order"""
         self.productOnOrderManager.remove_all_products_from_order();
         all_products = self.productOnOrderManager.get_all_products_on_order()
         order_is_empty = False
-        if len(all_products) == 0:  
+        if len(all_products) == 0:
             order_is_empty = True
         self.assertTrue(order_is_empty)
 

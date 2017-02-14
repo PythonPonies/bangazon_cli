@@ -13,9 +13,19 @@ class CLICreateCustomer(object):
         postal_code    = input("   Enter postal code > ")
         phone_number   = input("  Enter phone number > ")
 
-        new_customer = Customer(customer_name, street_address, city, state, postal_code, phone_number)
+        new_customer = Customer(
+            customer_name,
+            street_address,
+            city,
+            state,
+            postal_code,
+            phone_number
+        )
 
-        CustomerRegistrar.register(new_customer)
+        print(new_customer)
+        print(new_customer.get_customer_name())
+
+        CustomerRegistrar.register(new_customer, 'bangazon.db')
 
         print("The customer " + customer_name + " registered successfully")
 

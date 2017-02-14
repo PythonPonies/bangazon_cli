@@ -36,7 +36,7 @@ class TestRegisterCustomer(unittest.TestCase):
         self.assertIsInstance(nate, Customer)
 
         # Register the customer nate
-        CustomerRegistrar.register(nate)
+        CustomerRegistrar.register(nate, '../bangazon.db')
 
         # Test that it's true that the customer is registered
         self.assertTrue(CustomerRegistrar.check_if_registered(nate))
