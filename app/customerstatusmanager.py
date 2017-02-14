@@ -8,7 +8,7 @@ class CustomerStatusManager():
     '''
 
     def change_status(self, customer):
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect('bangazon.db') as conn:
             c = conn.cursor()
 
             try:
