@@ -16,7 +16,6 @@ class CustomerStatusManager():
                 c.execute("UPDATE Customers SET active=1 WHERE customerId = '{}'".format(customer))
                 c.execute("SELECT active FROM Customers WHERE active=1")
                 status = c.fetchall()[0][0]
-                print(status)
                 return status
             except sqlite3.OperationalError:
                 return "There was an error. Please try again."
