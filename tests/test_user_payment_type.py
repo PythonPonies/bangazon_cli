@@ -35,8 +35,8 @@ class TestUserPaymentTypes(unittest.TestCase):
                 """.format("John Doe"))
             selected_customer = cursor.fetchone()
         john = Customer(selected_customer[1], selected_customer[2], selected_customer[3], selected_customer[4], selected_customer[5], selected_customer[6])
-        self.active_customer.change_status(john)
-        self.payments.add_payment_type('AmEx', 1010101010)
+        self.active_customer.change_status(john, 'bangazon.db')
+        self.payments.add_payment_type('AmEx', 1010101010, '../bangazon.db')
 
 
         #------------------------------------------------------------------#
@@ -50,7 +50,7 @@ class TestUserPaymentTypes(unittest.TestCase):
 
     def test_user_can_get_own_payment_types(self):
 
-        user_payment_types = self.payments.get_payment_types()
+        user_payment_types = self.payments.get_payment_types('../bangazon.db')
 
         self.assertEqual(user_payment_types[1][1], 'AmEx')
         self.assertEqual(user_payment_types[1][2], 1010101010)
