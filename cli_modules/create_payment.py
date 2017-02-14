@@ -58,5 +58,18 @@ class CLICreatePayment():
 
         payment.add_payment_type(payment_name, account_number)
 
-        print(bcolors.OKBLUE + 'Successfully added ' + payment_name + ' (#' + account_number + ') payment method to your account.')
+        print(bcolors.OKBLUE + 'Successfully added ' + payment_name + ' (#' + account_number + ') payment method to your account.' + bcolors.ENDC)
+
+        print("""
+            *********************************************************
+            **  Welcome to Bangazon! Command Line Ordering System  **
+            *********************************************************
+            1. Create a customer account
+            2. Choose active customer
+            3. Create a payment option
+            4. Add product to shopping cart
+            5. Complete an order
+            7. Leave Bangazon!
+        """
+        )
 
