@@ -7,8 +7,9 @@ from app.productonordermanager import *
 
 class CLICompleteOrder():
     def complete_order():
-        if OrderFinalizer.check_cart_contains_items():
-            checkout_total = OrderFinalizer.order_total()
+        final_order = OrderFinalizer('bangazon.db')
+        if final_order.check_cart_contains_items():
+            checkout_total = final_order.order_total()
             print('Your total order is ' + str(checkout_total) +". ")
             submit_response = input('Ready to Purchase? (y/n)')
 
@@ -18,7 +19,8 @@ class CLICompleteOrder():
             if signal == False and submit_response == "Y" or submit_response == "y" or submit_response == "yes" or  submit_response == "YES":
                 signal = True
                 print(signal, "what's signal?")
-                list_of_payment_types = PaymentManager.get_payment_types('bangazon.db')
+                manage_pmt = PaymentManager()
+                list_of_payment_types = manage_pmt.get_payment_types('bangazon.db')
                 for payment_type in list_of_payment_types:
                     print(payment_type[0],payment_type[1])
 
@@ -43,7 +45,7 @@ class CLICompleteOrder():
             if signal == True:
                 selected_payment_option_as_integer = int(selected_payment_option)
                 print(selected_payment_option_as_integer, "this is int selected pmt option")
-                OrderFinalizer.finalize_order(selected_payment_option_as_integer)
+                final_order.finalize_order(selected_payment_option_as_integer)
 
 
         else:

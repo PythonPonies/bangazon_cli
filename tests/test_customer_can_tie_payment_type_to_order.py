@@ -23,14 +23,12 @@ class TestCompleteOrder(unittest.TestCase):
 
     """
 
-    def test_check_that_an_order_is_empty():
+    def test_check_that_an_order_is_empty(self):
         """
         purpose: test to check if the cart is empty
         author: Ike, Python Ponies
         methods: get_ordered_products: returns a list of products
         """
-
-        
          
         #instantiate customer and change status to active. 
         jfk = Customer("John Kennedy", '1819 Heron Pointe Dr', "Nashville", "TN", 37214, '8889878888')
@@ -39,15 +37,15 @@ class TestCompleteOrder(unittest.TestCase):
 
         #Create an instance of an order with no products
         start_jfk_order = Order(jfk)
-        manage_order = OrderManager()
+        manage_order = OrderManager('../bangazon.db')
         jfk_order = manage_order.create_order(start_jfk_order) #an order is created in the database
-        manage_products_on_order = ProductOnOrderManager()
+        manage_products_on_order = ProductOnOrderManager('../bangazon.db')
         current_order = manage_products_on_order.get_all_products_on_order() #get all products on active user's order
-        finalize_order = OrderFinalizer()
-        active_order_status = finalize_order.check_cart_contains_items()
-        self.assertEqual(active_order_status, [])
+        finalize_order = OrderFinalizer('../bangazon.db')
+        active_order_status = finalize_order.check_cart_contains_items() #check if items are present, returns True, else,False
+        self.assertEqual(active_order_status, True)
 
-    def test_check_that_order_can_be_completed():
+    def test_check_that_order_can_be_completed(self):
         """
         purpose: test to check if order can be completed: active user, products on order payment type on order,
         payment complete = 1
@@ -67,13 +65,13 @@ class TestCompleteOrder(unittest.TestCase):
         status_manager = CustomerStatusManager()
         status_manager.change_status(rfk, 'bangazon.db')
         start_rfk_order = Order(rfk)
-        manage_order = OrderManager()
+        manage_order = OrderManager('../bangazon.db')
         rfk_order = manage_order.create_order(start_rfk_order) #an order is created in the database
-        manage_products_on_order = ProductOnOrderManager()
+        manage_products_on_order = ProductOnOrderManager('../bangazon.db')
         gear = Product(selected_product[1],selected_product[2], selected_product[3], selected_product[4])
         manage_products_on_order.add_product_to_order(gear)
         current_order = manage_products_on_order.get_all_products_on_order() #get all products on active user's order
-        finalize_order = OrderFinalizer()
+        finalize_order = OrderFinalizer('../bangazon.db')
         active_order_status = finalize_order.check_cart_contains_items()
         self.assertNotEqual(active_order_status, [])
         self.assertNotEqual(start_rfk_order.get_order_payment_type(),'None')

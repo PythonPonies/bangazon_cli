@@ -14,7 +14,14 @@ class OrderFinalizer():
         -check_order_is_complete
     """
 
-    def check_cart_contains_items():
+    def __init__(self, db_path):
+        """
+        This method initializes the class with self, and the required argument specifying the database path. 
+        """
+        self.db_path = db_path
+
+
+    def check_cart_contains_items(self):
 
         """
         purpose: Determine whether the cart has items by returning status
@@ -25,7 +32,7 @@ class OrderFinalizer():
 
         """ 
 
-        with sqlite3.connect("../bangazon.db") as databae:
+        with sqlite3.connect(self.db_path) as databae:
             cursor = databae.cursor()
             try:
                 cursor.execute('SELECT customerId FROM `Customers` WHERE active = 1'
@@ -50,7 +57,7 @@ class OrderFinalizer():
                 # return []
 
 
-    def finalize_order(selected_payment_option_as_integer):
+    def finalize_order(self, selected_payment_option_as_integer):
         """
         purpose: Complete an order by tying a payment_type to an order
         author: Ike
@@ -62,7 +69,7 @@ class OrderFinalizer():
             - status: flag to ensure the order contains items (is active?)
         """
 
-        with sqlite3.connect("bangazon.db") as databae:
+        with sqlite3.connect(self.db_path) as databae:
             cursor = databae.cursor()
             # try:
 
@@ -112,8 +119,8 @@ class OrderFinalizer():
             victory_message = print("Your order is complete! Press any key to return to main menu")
             return victory_message
 
-    def order_total():
-        with sqlite3.connect("bangazon.db") as databae:
+    def order_total(self):
+        with sqlite3.connect(self.db_path) as databae:
             cursor = databae.cursor()
             cursor.execute("""
                 SELECT * FROM Customers
