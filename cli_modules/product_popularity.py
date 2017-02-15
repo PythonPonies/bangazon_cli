@@ -19,8 +19,17 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 class CLIProductPopularity():
+    '''
+    The CLIProductPopularity class allows a customer to see all products listed by popularity from the command line interface.
 
+    Methods: add_product
+
+    Author: Zoe LeBlanc, Python Ponies
+    '''
     def list_product():
+        '''
+        The list_product method lists all the products by popularity to a customer command line interface.
+        '''
         all_products = ProductOnOrderManager('bangazon.db').get_products_by_order_popularity()
         product_column = 18
         order_column = 11

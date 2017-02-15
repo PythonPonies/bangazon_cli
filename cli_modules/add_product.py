@@ -24,8 +24,17 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 class CLIAddProduct():
+    '''
+    The CLIAddProduct class allows a customer to add products to order from the command line interface.
 
+    Methods: add_product
+
+    Author: Zoe LeBlanc, Python Ponies
+    '''
     def add_product():
+        '''
+        The add_product method lists all the products available to a customer command line interface. It takes all required inputs and then passes them to input_product.
+        '''
         with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -63,6 +72,9 @@ class CLIAddProduct():
             CLIAddProduct.input_product(active_product)
 
     def input_product(active_product):
+        '''
+        The input_product method connects to the database and adds the product to and order. It then calls add_product again.
+        '''
         with sqlite3.connect('bangazon.db') as conn:
             cursor = conn.cursor()
             cursor.execute("""

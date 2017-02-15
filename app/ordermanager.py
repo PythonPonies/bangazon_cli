@@ -4,11 +4,16 @@ import sqlite3
 class OrderManager():
     """ The Order Manager class manages orders and products with data passed to it.
 
-    Method List   create_order, customer_has_active_order, add_product_to_origin, get_products_on_order
-    Arguments     The object argument lets the Order Manager class inherit properites of object
+    Method List   
+     - create_order, customer_has_active_order, add_product_to_origin, get_products_on_order
+    Arguments     
+    - The object argument lets the Order Manager class inherit properites of object
     Author        Zoe LeBlanc & Ike, Python Ponies
     """
     def __init__(self, db_path):
+        """
+        This method initializes the class with self, and the required argument specifying the database path. 
+        """
         self.db_path = db_path
 
     def create_order(self, order):

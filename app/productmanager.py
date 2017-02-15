@@ -1,7 +1,16 @@
 import sqlite3
 
 class ProductManager():
+    """ The Product Manager class manages products with data passed to it.
+
+    Method List   
+    - create_product, get_all_products, get_one_product
+    Author        Zoe LeBlanc, Python Ponies
+    """
     def __init__(self, db_path):
+        """
+        This method initializes the class with self, and the required argument specifying the database path. 
+        """
         self.db_path = db_path
 
     def create_product(self, product):
