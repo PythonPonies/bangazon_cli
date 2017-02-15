@@ -11,9 +11,6 @@ from app.product import *
 from app.customerregistrar import *
 from app.customerstatusmanager import *
 
-
-
-
 class TestCompleteOrder(unittest.TestCase):
     """
         purpose:
@@ -23,7 +20,7 @@ class TestCompleteOrder(unittest.TestCase):
         methods: test_products_have_been_added
     """
 
-    def test_check_that_an_order_is_empty(self):
+    def test_check_that_an_order_is_empty():
         """
         purpose: test to check if the cart is empty
         author: Ike
@@ -41,7 +38,7 @@ class TestCompleteOrder(unittest.TestCase):
         active_order_status = finalize_order.check_cart_contains_items()
         self.assertEqual(active_order_status, [])
 
-    def test_check_that_order_can_be_completed(self):
+    def test_check_that_order_can_be_completed():
         """
         purpose: test to check if order can be completed: active user, products on order payment type on order, 
         payment complete = 1 
