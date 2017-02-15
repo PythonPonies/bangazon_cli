@@ -1,8 +1,10 @@
 class Product:
     """ The Product class creates a new product with data passed to it.
 
-    Method List   __init__ instansiates the new Product with product_name, price, quantity
-    Arguments     The object argument lets the Customer class inherit properites of object
+    Method List   
+    - __init__ instansiates the new Product with product_name, price, quantity
+    Arguments     
+    - The object argument lets the Customer class inherit properites of object
     Author        Zoe LeBlanc, Python Ponies
     """
     def __init__(self, title, description, price, quantity):

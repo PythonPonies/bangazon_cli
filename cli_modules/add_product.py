@@ -47,12 +47,12 @@ class CLIAddProduct():
         new_order_manager = OrderManager('bangazon.db')
         new_order_manager.create_order(new_order)
         list_of_products = ProductOnOrderManager('bangazon.db').get_all_products_not_on_order()
-        products_list = "Number. Product Price Quantity \n"
+        products_list = bcolors.UNDERLINE +bcolors.OKBLUE +"ProductId Product Price Quantity \n" + bcolors.ENDC
         for product in list_of_products:
             products_list += "{}. {}, {}, {} \n".format(product[0], product[1], product[3], product[4])
         products_list += "Type 'done' to finish adding products"
         print(products_list)
-        active_product = input("Select a product to add to order:")
+        active_product = input(bcolors.BOLD + "Select a product to add to order:" + bcolors.ENDC)
         if active_product == 'done':
             print("""
             *********************************************************

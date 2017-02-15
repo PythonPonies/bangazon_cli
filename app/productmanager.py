@@ -23,7 +23,7 @@ class ProductManager():
                         productId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         title TEXT NOT NULL,
                         description TEXT NOT NULL,
-                        price INTEGER NOT NULL,
+                        price DECIMAL(18,2) NOT NULL,
                         quantity INTEGER NOT NULL
                     )
                 """)
