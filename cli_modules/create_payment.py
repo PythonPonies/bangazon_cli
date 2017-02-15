@@ -69,6 +69,7 @@ class CLICreatePayment():
             3. Create a payment option
             4. Add product to shopping cart
             5. Complete an order
+            6. List products by popularity
             7. Leave Bangazon!
         """
         )

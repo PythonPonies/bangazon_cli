@@ -1,10 +1,21 @@
 import sqlite3
 
 class ProductManager():
-    
+    """ The Product Manager class manages products with data passed to it.
+
+    Method List   
+    - create_product, get_all_products, get_one_product
+    Author        Zoe LeBlanc, Python Ponies
+    """
+    def __init__(self, db_path):
+        """
+        This method initializes the class with self, and the required argument specifying the database path. 
+        """
+        self.db_path = db_path
+
     def create_product(self, product):
         """Method creates a product"""
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS `Products`
@@ -24,7 +35,7 @@ class ProductManager():
 
     def get_all_products(self):
         """Gets all products in the database"""
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Products
@@ -34,7 +45,7 @@ class ProductManager():
 
     def get_one_product(self, product):
         """Gets one products in the database"""
-        with sqlite3.connect('../bangazon.db') as conn:
+        with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT * FROM Products
