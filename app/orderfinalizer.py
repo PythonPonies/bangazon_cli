@@ -6,7 +6,7 @@ class OrderFinalizer():
 
     """
     purpose: The OrderFinalizer class contains  methods and properties related
-    to the ordering of products from creation to submission.
+    to the submission of an order.
 
     Methods: 
         - check_cart_contains_items
@@ -24,20 +24,23 @@ class OrderFinalizer():
     def check_cart_contains_items(self):
 
         """
-        purpose: Determine whether the cart has items by returning status
-        Author: Ike
+        purpose: Determine whether the cart has items by returning status of True
+        if the order has products or False if not
+
+        Author: Ike, Python Ponies
             variables: 
                 - status: A flag set to False that can toggle to True
                 - order: A list of products, an empty list returns False
-
         """ 
 
+        # connect to database query for active user
         with sqlite3.connect(self.db_path) as databae:
             cursor = databae.cursor()
             try:
                 cursor.execute('SELECT customerId FROM `Customers` WHERE active = 1'
                 )
-                cid = cursor.fetchone()
+
+                cid = cursor.fetchone() #cid is the customerId for the active user
                 cursor.execute("""
                     SELECT * FROM Orders
                     WHERE payment_complete = 0
@@ -46,44 +49,47 @@ class OrderFinalizer():
                 .format(cid[0])
                 )
                 selected_order = cursor.fetchone()[0] #this is the one order from active user
+
+                # return products_on_selected_order
                 cursor.execute("""SELECT productId FROM ProductsOnOrders WHERE orderId = {}""".format(selected_order))
                 products_on_selected_order = cursor.fetchall()[0][0]
+
+                #if products are on a selected order return True
                 if products_on_selected_order:
                     return True
-                # return products_on_selected_order
+          
 
             except sqlite3.OperationalError:
                 return False
-                # return []
 
 
     def finalize_order(self, selected_payment_option_as_integer):
         """
         purpose: Complete an order by tying a payment_type to an order
-        author: Ike
+        and setting payment_complete to 1 (from 0 by default)
+        author: Ike, Python Ponies
         parameters:
             - order: list of products
             -payment_type: data type containing payment_type
         
-        variables:
-            - status: flag to ensure the order contains items (is active?)
         """
 
+        # query to determine the active user
         with sqlite3.connect(self.db_path) as databae:
             cursor = databae.cursor()
-            # try:
-
-
             cursor.execute('SELECT customerId FROM `Customers` WHERE active = 1'
             )
-            cid = cursor.fetchall()[0][0]
+            cid = cursor.fetchall()[0][0] #cid is the active user's customerId
+
+            #query to get the payment types for the active user
             cursor.execute("""
                 SELECT * FROM PaymentTypes
                 WHERE customerId = '{}'
                 """.format(cid)
             )
-            selected_payment_type = cursor.fetchall()[0][0]
-            # selected_payment_option_as_integer = int(selected_payment_option_as_integer)
+            selected_payment_type = cursor.fetchall()[0][0] 
+
+            #query to update orders of active user to payment_complete = 1
             cursor.execute("""
                 UPDATE  Orders
                 SET payment_complete = 1 
@@ -91,35 +97,46 @@ class OrderFinalizer():
                 AND customerId = {}
                 """.format(cid)
             )
+
+            #query to set payment type on active order to selected payment type of active user
             cursor.execute("""
                 UPDATE  Orders
                 SET paymentTypeId = {}
                 WHERE customerId = {}
                 """.format(selected_payment_option_as_integer, cid)
             )
+
+            #query to set payment complete status to 1 (paid)
             cursor.execute("""
                 SELECT * FROM  Orders
                 WHERE payment_complete = 1
                 AND customerId = {} 
                 """.format(cid)
             )
-            payment_status = cursor.fetchall()[0][4]
-            # print(payment_status)
-            # print('Your order is complete! Press any key to return to main menu')
-            # print("""*********************************************************
-            #     **  Welcome to Bangazon! Command Line Ordering System  **
-            #     *********************************************************
-            #     1. Create a customer account
-            #     2. Choose active customer
-            #     3. Create a payment option
-            #     4. Add product to shopping cart
-            #     5. Complete an order
-            #     7. Leave Bangazon!""")
-            # return payment_status
-            victory_message = print("Your order is complete! Press any key to return to main menu")
+
+            payment_status = cursor.fetchall()[0][4] #this is the payment status (1)
+            victory_message = print("""Your order is complete! Press any key to return to main menu
+
+                *********************************************************
+                **  Welcome to Bangazon! Command Line Ordering System  **
+                *********************************************************
+                1. Create a customer account
+                2. Choose active customer
+                3. Create a payment option
+                4. Add product to shopping cart
+                5. Complete an order
+                7. Leave Bangazon!
+
+
+                """)
             return victory_message
 
     def order_total(self):
+        """
+        purpose: Total an order by adding sum of products on an order
+        author: Ike, Python Ponies
+        """
+        #query to get sum of order
         with sqlite3.connect(self.db_path) as databae:
             cursor = databae.cursor()
             cursor.execute("""
@@ -149,47 +166,7 @@ class OrderFinalizer():
             total = cursor.fetchone()[0]
             return total
 
-            # cursor.execute("""
-            #     SELECT * FROM Orders
-            #     WHERE customerId = {}
-            #     -- AND payment_complete = 0
-            #     """.format(selected_user[0]))
-            # selected_order = cursor.fetchone()
-            # cursor.execute("""
-            #     SELECT productId FROM ProductsOnOrders
-            #     WHERE orderId = {}
-            #     """.format(selected_order[0]))
-            # selected_products = cursor.fetchall()
 
-            # list_of_selected_products = []
-            # for item in selected_products:
-            #     single_item = list(item)
-            #     list_of_selected_products.extend(single_item)
-
-            # print(list_of_selected_products)
-
-
-
-            # except:
-                # return False
-
-        # status = True
-        # self.order = order
-        # self.payment_type =  payment_type
-        # if status:
-        #      order["payment_type"] = self.payment_type
-
-        # return 1
-
-
-    # def check_order_is_complete(self,order, payment_type):
-    #     """
-    #     purpose: Check that an order is complete by returning a True indicator
-    #     author: Ike
-    #     parameters:
-    #         -order
-    #         -payment_type
-    #     """
 
 # if __name__ == '__main__':
 #     new_order = OrderFinalizer()
