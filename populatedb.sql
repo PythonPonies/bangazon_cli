@@ -59,7 +59,7 @@ INSERT INTO Products VALUES (null, 'Bicycle', 'Two wheels, one speed', 300.00, 1
 INSERT INTO Products VALUES (null, 'Ice Cream', 'Chocolate', 5.00, 55);
 INSERT INTO Products VALUES (null, 'Soccer Ball', 'Perfect for soccer', 15.00, 14);
 INSERT INTO Products VALUES (null, 'Plastic Cups', 'For drinking things', 2.00, 300);
-INSERT INTO Products VALUES (null, 'nike medcon', 'training shoes', 95.27, 50);
+INSERT INTO Products VALUES (null, 'nike medcon', 'training shoes', 95, 50);
 
 
 CREATE TABLE `Orders` (
