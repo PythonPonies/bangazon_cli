@@ -125,7 +125,8 @@ class OrderFinalizer():
                 3. Create a payment option
                 4. Add product to shopping cart
                 5. Complete an order
-                7. Leave Bangazon!
+                6. List menu by popularity
+                7. Leave Bangazon
 
 
                 """)
