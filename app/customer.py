@@ -25,7 +25,7 @@ class Customer(object):
         self.__street_address = street_address
         self.__city = city
         self.__state = state
-        self.__postal_code = postal_code
+        self.__postal_code = int(postal_code)
         self.__phone_number = phone_number
         self.__active = 0
         # Active is false by default so it doesn't need to be an argument. SQLite doesn't have a boolean so it takes 0 or 1

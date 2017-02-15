@@ -25,7 +25,7 @@ class CLICreatePayment():
     """
         The CLICreatePayment class contains all methods and properties related to the command line interface actions of adding payment methods to a customer's account.
 
-        Methods: 
+        Methods:
                 - create_payment
 
         Author: Steven Holmes (Python Ponies [Bangazon, LLC])
@@ -56,7 +56,20 @@ class CLICreatePayment():
 
             > """ + bcolors.ENDC)
 
-        payment.add_payment_type(payment_name, account_number)
+        payment.add_payment_type(payment_name, account_number, 'bangazon.db')
 
-        print(bcolors.OKBLUE + 'Successfully added ' + payment_name + ' (#' + account_number + ') payment method to your account.')
+        print(bcolors.OKBLUE + 'Successfully added ' + payment_name + ' (#' + account_number + ') payment method to your account.' + bcolors.ENDC)
+
+        print("""
+            *********************************************************
+            **  Welcome to Bangazon! Command Line Ordering System  **
+            *********************************************************
+            1. Create a customer account
+            2. Choose active customer
+            3. Create a payment option
+            4. Add product to shopping cart
+            5. Complete an order
+            7. Leave Bangazon!
+        """
+        )
 
