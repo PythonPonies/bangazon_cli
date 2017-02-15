@@ -11,9 +11,9 @@ CREATE TABLE `Customers` (
 );
 
 INSERT INTO Customers VALUES (null, 'John Doe', '123 Testing Way', 'Exampleville', 'Florida', '12345', '123-456-1234', 0);
-INSERT INTO Customers VALUES (null, 'Janet Jackson', '555 Poptart Drive', 'Beverly Hills', 'California', '90210', '911-111-1111', 1);
+INSERT INTO Customers VALUES (null, 'Janet Jackson', '555 Poptart Drive', 'Beverly Hills', 'California', '90210', '911-111-1111', 0);
 INSERT INTO Customers VALUES (null, 'John Kennedy', '1819 Heron Pointe Dr', 'Nashville', 'TN', 37214, '8889878888', 0);
-INSERT INTO Customers VALUES (null, 'Robert Kennedy', '1919 Heron Pointe Dr', 'Nashville', 'TN', 37214, '8888978880', 0);
+INSERT INTO Customers VALUES (null, 'Robert Kennedy', '1919 Heron Pointe Dr', 'Nashville', 'TN', 37214, '8888978880', 1);
 
 
 CREATE TABLE `PaymentTypes` (
@@ -34,8 +34,14 @@ INSERT INTO PaymentTypes
   FROM Customers c
   WHERE c.customer_name = 'Janet Jackson';
 
+
 INSERT INTO PaymentTypes
   SELECT null, 'Discovery', '100045499', customerId
+  FROM Customers c
+  WHERE c.customer_name = 'Robert Kennedy';
+
+INSERT INTO PaymentTypes
+  SELECT null, 'Paypal', '097554321', customerId
   FROM Customers c
   WHERE c.customer_name = 'Robert Kennedy';
 
@@ -76,6 +82,11 @@ INSERT INTO Orders
   FROM Customers c, PaymentTypes t
   WHERE c.customer_name = 'John Doe' and t.paymentTypeId = 1;
 
+INSERT INTO Orders
+  SELECT null, '03-04-2017', c.customerId, t.paymentTypeId, 0
+  FROM Customers c, PaymentTypes t
+  WHERE c.customer_name = 'Robert Kennedy' and t.paymentTypeId = 4;
+
 
 CREATE TABLE `ProductsOnOrders` (
     `productsOnOrderId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -95,3 +106,12 @@ INSERT INTO ProductsOnOrders
   FROM Products p, Orders o
   WHERE p.productId = 1 and o.orderId = 1;
 
+INSERT INTO ProductsOnOrders
+  SELECT null, productId, orderId
+  FROM Products p, Orders o
+  WHERE p.productId = 5 and o.orderId = 3;
+
+INSERT INTO ProductsOnOrders
+  SELECT null, productId, orderId
+  FROM Products p, Orders o
+  WHERE p.productId = 4 and o.orderId = 3;
