@@ -113,12 +113,19 @@ class ProductOnOrderManager():
                 WHERE orderId = '{}' 
                 """.format(selected_order[0][0]))
             selected_products_on_order = cursor.fetchall()
-            for product in selected_products_on_order:
+            if len(selected_products_on_order) == 0:
                 cursor.execute("""
                 SELECT * FROM Products
                 WHERE quantity != {} 
                 """.format(0))
-            remaining_products = cursor.fetchall()
+                remaining_products = cursor.fetchall()  
+            else: 
+                for product in selected_products_on_order:
+                    cursor.execute("""
+                    SELECT * FROM Products
+                    WHERE quantity != {} 
+                """.format(0))
+                remaining_products = cursor.fetchall()
             return remaining_products
         cursor.close()
 
