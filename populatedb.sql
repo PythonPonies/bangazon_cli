@@ -85,7 +85,7 @@ INSERT INTO Orders
 INSERT INTO Orders
   SELECT null, '03-04-2017', c.customerId, t.paymentTypeId, 0
   FROM Customers c, PaymentTypes t
-  WHERE c.customer_name = 'Robert Kennedy' and t.paymentTypeId = 'None';
+  WHERE c.customer_name = 'Robert Kennedy' and t.paymentTypeId = 4;
 
 
 CREATE TABLE `ProductsOnOrders` (

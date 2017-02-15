@@ -24,13 +24,14 @@ class OrderFinalizer():
                 - order: A list of products, an empty list returns False
 
         """ 
+
         with sqlite3.connect("bangazon.db") as databae:
             cursor = databae.cursor()
             try:
                 cursor.execute('SELECT customerId FROM `Customers` WHERE active = 1'
                 )
                 cid = cursor.fetchone()
-                # import pdb; pdb.set_trace()
+                print(cid, "cid in ofinalizer")
                 cursor.execute("""
                     SELECT * FROM Orders
                     WHERE payment_complete = 0
@@ -38,9 +39,11 @@ class OrderFinalizer():
                     """
                 .format(cid[0])
                 )
-                selected_order = cursor.fetchone() #this is the one order from active user
-                cursor.execute("""SELECT productId FROM ProductsOnOrders WHERE orderId = {}""".format(selected_order[0]))
-                products_on_selected_order = cursor.fetchall()
+                selected_order = cursor.fetchone()[0] #this is the one order from active user
+                print(selected_order, "selected order in ofinalizer")
+                cursor.execute("""SELECT productId FROM ProductsOnOrders WHERE orderId = {}""".format(selected_order))
+                products_on_selected_order = cursor.fetchall()[0][0]
+                print(products_on_selected_order, "products on selected order in ofinalizer")
                 if products_on_selected_order:
                     return True
                 # return products_on_selected_order
@@ -50,7 +53,7 @@ class OrderFinalizer():
                 # return []
 
 
-    def complete_order(selected_payment_option):
+    def finalize_order(selected_payment_option_as_integer):
         """
         purpose: Complete an order by tying a payment_type to an order
         author: Ike
@@ -76,7 +79,7 @@ class OrderFinalizer():
                 """.format(cid)
             )
             selected_payment_type = cursor.fetchall()[0][0]
-            selected_payment_option = int(selected_payment_option)
+            # selected_payment_option_as_integer = int(selected_payment_option_as_integer)
             cursor.execute("""
                 UPDATE  Orders
                 SET payment_complete = 1 
@@ -87,9 +90,8 @@ class OrderFinalizer():
             cursor.execute("""
                 UPDATE  Orders
                 SET paymentTypeId = {}
-                WHERE paymentTypeId = 'None'
-                AND customerId = {}
-                """.format(selected_payment_option, cid)
+                WHERE customerId = {}
+                """.format(selected_payment_option_as_integer, cid)
             )
             cursor.execute("""
                 SELECT * FROM  Orders
@@ -110,7 +112,8 @@ class OrderFinalizer():
             #     5. Complete an order
             #     7. Leave Bangazon!""")
             # return payment_status
-            return "Your order is complete! Press any key to return to main menu"
+            victory_message = print("Your order is complete! Press any key to return to main menu")
+            return victory_message
 
     def order_total():
         with sqlite3.connect("bangazon.db") as databae:
@@ -184,9 +187,10 @@ class OrderFinalizer():
     #         -payment_type
     #     """
 
-if __name__ == '__main__':
-    new_order = OrderFinalizer()
-    new_order.complete_order()
-    new_order.order_total()
+# if __name__ == '__main__':
+#     new_order = OrderFinalizer()
+#     # new_order.check_cart_contains_items()
+#     # new_order.complete_order()
+#     # new_order.order_total()
 
 
