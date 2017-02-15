@@ -17,18 +17,27 @@ class TestCompleteOrder(unittest.TestCase):
         tests for an finalization of an order
         via tying a payment type to an order
         author: Ike
-        methods: test_products_have_been_added
+        methods: 
+            - test_check_that_an_order_is_empty
+            - test_check_that_order_can_be_completed
+
     """
 
     def test_check_that_an_order_is_empty():
         """
         purpose: test to check if the cart is empty
-        author: Ike
+        author: Ike, Python Ponies
         methods: get_ordered_products: returns a list of products
         """
+
+        
+         
+        #instantiate customer and change status to active. 
         jfk = Customer("John Kennedy", '1819 Heron Pointe Dr', "Nashville", "TN", 37214, '8889878888')
         manage_status = CustomerStatusManager()
         make_jfk_active_user = manage_status.change_status(jfk, 'bangazon.db')
+
+        #Create an instance of an order with no products
         start_jfk_order = Order(jfk)
         manage_order = OrderManager()
         jfk_order = manage_order.create_order(start_jfk_order) #an order is created in the database
