@@ -14,11 +14,12 @@ class PaymentManager():
 
     def add_payment_type(self, payment_name, account_number, db_path):
         """
-            Adds payment type to customer account
+            Adds payment type to active customer accout
 
             Arguments:
                     payment_name - payment type name (eg. Visa)
                     account_number - account number of payment type
+                    db_path - the absolute path to the database file
         """
 
         with sqlite3.connect(db_path) as bangazon:
@@ -47,10 +48,10 @@ class PaymentManager():
 
     def get_payment_types(self, db_path):
         """
-            Gets payment types of customer
+            Returns all payment types of active customer
 
             Arguments:
-                    customer - customer to get payment types for
+                    db_path - the absolute path to the database file
         """
 
         with sqlite3.connect(db_path) as bangazon:
