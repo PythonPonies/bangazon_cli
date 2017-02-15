@@ -25,13 +25,12 @@ class OrderFinalizer():
 
         """ 
 
-        with sqlite3.connect("bangazon.db") as databae:
+        with sqlite3.connect("../bangazon.db") as databae:
             cursor = databae.cursor()
             try:
                 cursor.execute('SELECT customerId FROM `Customers` WHERE active = 1'
                 )
                 cid = cursor.fetchone()
-                print(cid, "cid in ofinalizer")
                 cursor.execute("""
                     SELECT * FROM Orders
                     WHERE payment_complete = 0
@@ -40,10 +39,8 @@ class OrderFinalizer():
                 .format(cid[0])
                 )
                 selected_order = cursor.fetchone()[0] #this is the one order from active user
-                print(selected_order, "selected order in ofinalizer")
                 cursor.execute("""SELECT productId FROM ProductsOnOrders WHERE orderId = {}""".format(selected_order))
                 products_on_selected_order = cursor.fetchall()[0][0]
-                print(products_on_selected_order, "products on selected order in ofinalizer")
                 if products_on_selected_order:
                     return True
                 # return products_on_selected_order
