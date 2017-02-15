@@ -16,13 +16,23 @@ class CLICreateCustomer():
         '''
 
         # collect user inputs
-        customer_name  = input(" Enter customer name > ")
+        customer_name  = input("Enter customer name  > ")
         street_address = input("Enter street address > ")
-        city           = input("          Enter city > ")
-        state          = input("         Enter state > ")
-        postal_code    = input("   Enter postal code > ")
-        phone_number   = input("  Enter phone number > ")
+        city           = input("Enter city           > ")
+        state          = input("Enter state          > ")
+        print                 ("(enter number only)")
+        postal_code    = input("Enter postal code    > ")
 
+        # only allow numbers when asking for postal code
+        while postal_code.isdigit() == False:
+            print              ("")
+            print              ("ERROR")
+            print              ("(enter number only)")
+            postal_code = input("Enter postal code    > ")
+
+        phone_number   = input ("Enter phone number   > ")
+
+        # create new customer based on inputs
         new_customer = Customer(
             customer_name,
             street_address,
