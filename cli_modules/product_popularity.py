@@ -31,14 +31,10 @@ class CLIProductPopularity():
         The list_product method lists all the products by popularity to a customer command line interface.
         '''
         all_products = ProductOnOrderManager('bangazon.db').get_products_by_order_popularity()
-        product_column = 18
-        order_column = 11
-        customer_column = 11
-        revenue_column = 15
-        table_products = "{:18s}{:^11s} {:^11s}{:>15s}\n".format("Products", "Orders", "Customers", "Revenue")
-        table_products += "*" * 55 + "\n"
+        table_products = bcolors.OKBLUE + "{:18s}{:^11s} {:^11s}{:>15s}\n".format("Products", "Orders", "Customers", "Revenue") + bcolors.ENDC
+        table_products += bcolors.HEADER + "*" * 55 + "\n" + bcolors.ENDC
         for product in all_products:
-            table_products += "{:18s}{:^11d}{:^11d}{:>15d}\n".format(product[0], product[1], product[2], product[3])
+            table_products += "{:18s}{:^11d}{:^11d}{:>15d}\n".format(product[0], int(product[1]), int(product[2]), int(product[3]))
         print(table_products)
         print("""
             *********************************************************
