@@ -12,14 +12,14 @@ class CustomerStatusManager():
             c = conn.cursor()
 
             try:
+                #change all users' status to inactive
                 c.execute("UPDATE Customers SET active=0 WHERE active=1")
+                #set the specified customer's status to active
                 c.execute("UPDATE Customers SET active=1 WHERE customerId = '{}'".format(customer))
+                #return that customer's status to the point of call
                 c.execute("SELECT active FROM Customers WHERE active=1")
                 status = c.fetchall()[0][0]
                 return status
             except sqlite3.OperationalError:
                 return "There was an error. Please try again."
 
-if __name__ == '__main__':
-    activeUser = CustomerStatusManager()
-    activeUser.change_status(1)
