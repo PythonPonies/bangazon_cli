@@ -23,6 +23,3 @@ class CustomerStatusManager():
             except sqlite3.OperationalError:
                 return "There was an error. Please try again."
 
-if __name__ == '__main__':
-    activeUser = CustomerStatusManager()
-    activeUser.change_status(1)
